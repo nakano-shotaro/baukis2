@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine 
+    #container_name: postgres
+    #restart: always
+    volumes:
+      - db-data:/var/lib/postgres/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password 
+      #POSTGRES_DB: baukis2
+    ports:
+      - "5432:5432"
+  web:
+    build: 
+      context: . 
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/baukis2 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db 
+    environment:
+      - DOCKER_BUILDKIT=0  
+volumes:
+  db-data:

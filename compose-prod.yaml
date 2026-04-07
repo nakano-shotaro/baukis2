@@ -1,0 +1,30 @@
+services:
+  db:
+    image:  postgres:16-alpine 
+    #container_name: postgres
+    #restart: always
+    volumes:
+      - db-data:/var/lib/postgres/data 
+    environment: 
+      POSTGRES_USER: postgres 
+      POSTGRES_PASSWORD: password 
+      #POSTGRES_DB: sample-api5 
+    ports:
+      - "5432:5432" 
+    
+    
+  web:
+    build: 
+      context: . 
+      dockerfile: Dockerfile.prod 
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'" 
+    volumes:
+      - .:/sample-api5
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - db 
+    environment:
+      - DOCKER_BUILDKIT=0 
+volumes:
+  db-data: 
