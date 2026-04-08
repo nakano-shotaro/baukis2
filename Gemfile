@@ -46,8 +46,8 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
 gem "dartsass-rails"
 
-gem "rails-i18n" 
-gem "kaminari" 
+gem "rails-i18n", "~> 7.0.1" 
+gem "kaminari", "~> 1.2" 
 gem "kaminari-i18n"
 gem "acts_as_list"
 gem "date_validator" 

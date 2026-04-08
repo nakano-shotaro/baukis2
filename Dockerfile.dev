@@ -1,13 +1,21 @@
 FROM ruby:3.4.5
 
 WORKDIR /baukis2
-COPY Gemfile /baukis2/Gemfile
-COPY Gemfile.lock /baukis2/Gemfile.lock
+
+# ① Gemfileだけをコピーしてbundle installを実行
+# （ここでコンテナ内に新しいGemfile.lockが自動作成される）
+COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
+# ② アプリの全ファイルをコピー（entrypoint.shなども含む）
+COPY . /baukis2
+
+# entrypoint.sh の権限設定
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
+
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
+
