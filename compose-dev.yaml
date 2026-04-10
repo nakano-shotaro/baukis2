@@ -1,27 +1,36 @@
 services:
   db:
-    image: postgres:16-alpine 
-    #container_name: postgres
-    #restart: always
+    image: postgres:16-alpine
     volumes:
-      - db-data:/var/lib/postgres/data
+      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password 
-      #POSTGRES_DB: baukis2
+      POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    healthcheck:                    
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   web:
-    build: 
-      context: . 
+    build:
+      context: .
       dockerfile: Dockerfile.dev
     volumes:
-      - .:/baukis2 
+      - .:/baukis2
     ports:
       - "3000:3000"
-    depends_on:
-      - db 
+    depends_on:                     
+      db:
+        condition: service_healthy       
     environment:
-      - DOCKER_BUILDKIT=0  
+      - DOCKER_BUILDKIT=0 
+    command: ./bin/dev 
+    tty: true 
+    stdin_open: true            
+
 volumes:
   db-data:

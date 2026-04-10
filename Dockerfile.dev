@@ -2,12 +2,16 @@ FROM ruby:3.4.5
 
 WORKDIR /baukis2
 
-# ① Gemfileだけをコピーしてbundle installを実行
-# （ここでコンテナ内に新しいGemfile.lockが自動作成される）
+# 必要なパッケージをインストール（psql + Railsでよく使うもの）
+RUN apt-get update -qq && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Gemfileだけ先にコピーしてbundle install
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-# ② アプリの全ファイルをコピー（entrypoint.shなども含む）
+# アプリ全体をコピー
 COPY . /baukis2
 
 # entrypoint.sh の権限設定
