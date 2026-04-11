@@ -28,7 +28,12 @@ services:
         condition: service_healthy       
     environment:
       - DOCKER_BUILDKIT=0 
-    command: ./bin/dev 
+      - RAILS_ENV=production          # ← 本番モード
+      - RAILS_SERVE_STATIC_FILES=1    # ← 静的ファイル配信有効
+      # - SECRET_KEY_BASE=dummy_value # 必要なら追加（ダミーでOK）
+      # - RAILS_MASTER_KEY=xxxxxxxx   # credentials を使う場合
+    #command: ./bin/dev 
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
     tty: true 
     stdin_open: true            
 
