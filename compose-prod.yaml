@@ -6,33 +6,44 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 15s   # 初期化に時間がかかる場合に余裕を持たせる
+      start_period: 15s
 
   web:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    # commandは削除（DockerfileのCMD + ENTRYPOINTを使う）
-    volumes: []   # 本番ではホストマウント不要（イメージにすべて入っている）
-    ports:
-      - "3000:3000"
+    volumes: []
+    expose:
+      - "3000"
     depends_on:
       db:
-        condition: service_healthy   # healthcheckが通るまで待つ（大事！）  
+        condition: service_healthy
     environment:
       - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - RAILS_ENV=production
-      - RAILS_SERVE_STATIC_FILES=1
       - DATABASE_URL=postgresql://postgres:password@db:5432/baukis2_production
-      - SECRET_KEY_BASE_DUMMY=1 
     restart: unless-stopped
+
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
 
 volumes:
   db-data:
+  caddy_data:
+  caddy_config:
