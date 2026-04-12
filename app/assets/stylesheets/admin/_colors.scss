@@ -1,0 +1,9 @@
+@use "sass:color";
+
+$dark_gray: #666666; 
+$gray: #cccccc; 
+$light_gray: #eeeeee;
+$very_light_gray: #fafafa;
+
+$dark_magenta: #884488;
+$very_dark_magenta: color.adjust($dark_magenta, $lightness: -25%); 
