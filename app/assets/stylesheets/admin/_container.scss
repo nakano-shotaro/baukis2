@@ -1,0 +1,15 @@
+@use "colors" as admin_colors; 
+@use "dimensions" as admin_dimensions; 
+
+div#wrapper {
+  div#container {
+    h1 {
+      margin: 0;
+      padding: admin_dimensions.$moderate * 1.5 admin_dimensions.$moderate;
+      font-size: admin_dimensions.$large; 
+      font-weight: normal;
+      background-color: admin_colors.$very_dark_magenta; 
+      color: admin_colors.$light_gray;   
+    }
+  }  
+}

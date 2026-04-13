@@ -1,0 +1,36 @@
+@use "colors" as admin_colors; 
+@use "dimensions" as admin_dimensions; 
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;  
+}
+div#wrapper {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto;
+  padding-bottom: (admin_dimensions.$wide + admin_dimensions.$moderate) * 2 + admin_dimensions.$standard_line_height; 
+  background-color: admin_colors.$gray;   
+} 
+header {
+  padding: admin_dimensions.$moderate; 
+  background-color: admin_colors.$dark_magenta;
+  color: admin_colors.$very_light_gray; 
+  span.logo-mark {
+    font-weight: bold;
+  }
+}
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  background-color: admin_colors.$dark_gray; 
+  color: admin_colors.$very_light_gray; 
+  p {
+    text-align: center;
+    padding: admin_dimensions.$moderate; 
+    margin: 0;
+  }
+}

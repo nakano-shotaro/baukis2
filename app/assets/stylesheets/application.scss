@@ -1,5 +1,5 @@
-// Sassy 
-@use "staff/layout"; 
-@use "staff/container";
-@use "staff/colors";
-@use "staff/dimensions";  
+// 共通のベーススタイルだけ残す（必要最小限）
+@use "sass:color";  // 必要なら
+
+// 各役割のスタイルは個別のエントリで管理するので、ここではほとんど何も書かない
+// または本当に全ページ共通のものだけ

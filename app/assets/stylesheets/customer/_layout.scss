@@ -1,0 +1,36 @@
+@use "customer/colors" as customer_colors; 
+@use "customer/dimensions" as customer_dimensions; 
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;  
+}
+div#wrapper {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto;
+  padding-bottom: (customer_dimensions.$wide + customer_dimensions.$moderate) * 2 + customer_dimensions.$standard_line_height; 
+  background-color: customer_colors.$gray;   
+} 
+header {
+  padding: customer_dimensions.$moderate; 
+  background-color: customer_colors.$dark_yellow;
+  color: customer_colors.$very_light_gray; 
+  span.logo-mark {
+    font-weight: bold;
+  }
+}
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  background-color: customer_colors.$dark_gray; 
+  color: customer_colors.$very_light_gray; 
+  p {
+    text-align: center;
+    padding: customer_dimensions.$moderate; 
+    margin: 0;
+  }
+}

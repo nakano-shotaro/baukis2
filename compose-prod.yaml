@@ -26,20 +26,22 @@ services:
     environment:
       - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
       - RAILS_ENV=production
-      - DATABASE_URL=postgresql://postgres:password@db:5432/baukis2_production
+      - DATABASE_URL=postgresql://postgres:password@db:5432/baukis2_production 
+      - RAILS_SERVE_STATIC_FILES=true
+      - RAILS_HOSTS=web,localhost,127.0.0.1,0.0.0.0  
     restart: unless-stopped
 
   caddy:
-    image: caddy:alpine
+    image: caddy:latest
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"   # HTTP/3
+      - "8080:80"
+      #- "443:443"
+      #- "443:443/udp"   # HTTP/3
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
-      - caddy_config:/config
+      #- caddy_config:/config
     depends_on:
       - web
 

@@ -1,0 +1,15 @@
+@use "colors" as staff_colors; 
+@use "dimensions"as staff_dimensions; 
+
+div#wrapper {
+  div#container {
+    h1 {
+      margin: 0;
+      padding: staff_dimensions.$moderate * 1.5 staff_dimensions.$moderate;
+      font-size: staff_dimensions.$large; 
+      font-weight: normal;
+      background-color: staff_colors.$very_dark_cyan; 
+      color: staff_colors.$light_gray;   
+    }
+  }  
+}

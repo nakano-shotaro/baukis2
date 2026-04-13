@@ -1,4 +1,5 @@
 Rails.application.configure do 
+  config.hosts.clear   # 開発中はこれを有効に（全部許可）
   config.hosts << "localhost" 
   config.hosts << "127.0.0.1"
   config.hosts << "0.0.0.0"

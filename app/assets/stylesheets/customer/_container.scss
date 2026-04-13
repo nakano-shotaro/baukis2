@@ -1,0 +1,15 @@
+@use "colors" as customer_colors; 
+@use "dimensions" as customer_dimensions; 
+
+div#wrapper {
+  div#container {
+    h1 {
+      margin: 0;
+      padding: customer_dimensions.$moderate * 1.5 customer_dimensions.$moderate;
+      font-size: customer_dimensions.$large; 
+      font-weight: normal;
+      background-color: customer_colors.$very_dark_yellow; 
+      color: customer_colors.$light_gray;   
+    }
+  }  
+}

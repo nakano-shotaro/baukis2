@@ -1,16 +1,8 @@
- :80 {
-    reverse_proxy web:3000
+:80 {
+    # フォーマットを綺麗に保つための設定
+    encode gzip
 
-    # ログを有効化（デバッグに便利）
-    log
-
-    # ヘッダー圧縮など本番向け設定
-    encode zstd gzip
+    # Railsにすべて転送
+    reverse_proxy web:3000 
 }
-
-# 将来ドメイン取得後に使うブロック
-# yourdomain.com {
-#     reverse_proxy web:3000
-#     tls your-email@example.com
-# }
 

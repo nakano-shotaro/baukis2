@@ -1,0 +1,36 @@
+@use "colors" as staff_colors; 
+@use "dimensions" as staff_dimensions; 
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;  
+}
+div#wrapper {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto;
+  padding-bottom: (staff_dimensions.$wide + staff_dimensions.$moderate) * 2 + staff_dimensions.$standard_line_height; 
+  background-color: staff_colors.$gray;   
+} 
+header {
+  padding: staff_dimensions.$moderate; 
+  background-color: staff_colors.$dark_cyan;
+  color: staff_colors.$very_light_gray; 
+  span.logo-mark {
+    font-weight: bold;
+  }
+}
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  background-color: staff_colors.$dark_gray; 
+  color: staff_colors.$very_light_gray; 
+  p {
+    text-align: center;
+    padding: staff_dimensions.$moderate; 
+    margin: 0;
+  }
+}
