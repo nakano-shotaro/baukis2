@@ -1,8 +1,5 @@
 :80 {
-    # フォーマットを綺麗に保つための設定
-    encode gzip
-
-    # Railsにすべて転送
-    reverse_proxy web:3000 
+    encode gzip zstd
+    reverse_proxy web:3000
 }
 

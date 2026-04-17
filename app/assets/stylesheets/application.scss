@@ -1,5 +1,12 @@
-// 共通のベーススタイルだけ残す（必要最小限）
-@use "sass:color";  // 必要なら
+@use "sass:color";
 
-// 各役割のスタイルは個別のエントリで管理するので、ここではほとんど何も書かない
-// または本当に全ページ共通のものだけ
+// === 共有スタイル（必ず最初に読み込む）===
+@use "shared/colors" as shared_colors;
+@use "shared/shared" as shared;
+
+// === 各役割ごとのスタイル（名前空間で衝突防止）===
+@use "staff/staff" as staff;
+@use "admin/admin" as admin;
+@use "customer/customer" as customer;
+
+// 必要に応じて追加の共通スタイルを書く

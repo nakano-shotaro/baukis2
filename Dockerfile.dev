@@ -1,25 +1,22 @@
-FROM ruby:3.4.5
+# syntax = docker/dockerfile:1
 
-WORKDIR /baukis2
+ARG RUBY_VERSION=3.4.5
+FROM ruby:$RUBY_VERSION-slim
 
-# 必要なパッケージをインストール（psql + Railsでよく使うもの）
-RUN apt-get update -qq && apt-get install -y \
-    postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /rails
 
-# Gemfileだけ先にコピーしてbundle install
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+      build-essential git libpq-dev libvips pkg-config curl libyaml-dev \
+      postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --jobs 4 --retry 3
 
-# アプリ全体をコピー
-COPY . /baukis2
+COPY . .
 
-# entrypoint.sh の権限設定
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/rails/entrypoint.sh"]
 EXPOSE 3000
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/dev"]
 

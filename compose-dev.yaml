@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
-    healthcheck:                    
+    healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
@@ -20,22 +20,19 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
-      - .:/baukis2
+      - .:/rails
     ports:
       - "3000:3000"
-    depends_on:                     
+    depends_on:
       db:
-        condition: service_healthy       
+        condition: service_healthy
     environment:
-      - DOCKER_BUILDKIT=0 
-      - RAILS_ENV=production          # ← 本番モード
-      - RAILS_SERVE_STATIC_FILES=1    # ← 静的ファイル配信有効
-      # - SECRET_KEY_BASE=dummy_value # 必要なら追加（ダミーでOK）
-      # - RAILS_MASTER_KEY=xxxxxxxx   # credentials を使う場合
-    #command: ./bin/dev 
-    command: bundle exec rails server -b 0.0.0.0 -p 3000
-    tty: true 
-    stdin_open: true            
+      - RAILS_ENV=development
+      - RAILS_SERVE_STATIC_FILES=true
+    command: ./bin/dev          # Procfile.dev を使う場合（おすすめ）
+    # command: bundle exec rails server -b 0.0.0.0 -p 3000
+    tty: true
+    stdin_open: true
 
 volumes:
   db-data:

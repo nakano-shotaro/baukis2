@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 ARG RUBY_VERSION=3.4.5
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+FROM ruby:$RUBY_VERSION-slim as base
 
 WORKDIR /rails
 
@@ -24,9 +24,12 @@ RUN bundle install --jobs 4 --retry 3 && \
 
 COPY . .
 
-RUN bundle exec bootsnap precompile app/ lib/ && \
+# ディレクトリ作成とプリコンパイル（dartsass + assets）
+RUN mkdir -p app/assets/builds public/assets && \
+    touch app/assets/builds/.keep && \
+    bundle exec bootsnap precompile app/ lib/ && \
     SECRET_KEY_BASE_DUMMY=1 bundle exec rails dartsass:build --verbose && \
-    SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+    SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bundle exec rails assets:precompile
 
 # Final stage
 FROM base
@@ -35,15 +38,18 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
+COPY --from=build --chown=root:root /usr/local/bundle /usr/local/bundle
+COPY --from=build --chown=root:root /rails /rails
 
-RUN useradd rails --create-home --shell /bin/bash && \
-    mkdir -p /rails/db /rails/log /rails/storage /rails/tmp /rails/public/assets && \
-    chown -R rails:rails /rails
+RUN useradd --create-home --shell /bin/bash rails && \
+    mkdir -p /rails/db /rails/log /rails/storage /rails/tmp /rails/public/assets /rails/app/assets/builds && \
+    chown -R rails:rails /rails && \
+    chmod +x /rails/entrypoint.sh
+
+COPY --from=build --chown=rails:rails /rails/public/assets /rails/public/assets   
 
 USER rails:rails
 
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENTRYPOINT ["/rails/entrypoint.sh"]
 EXPOSE 3000
 CMD ["./bin/rails", "server", "-b", "0.0.0.0"]

@@ -1,0 +1,14 @@
+@use "colors" as shared_colors;
+
+#error {
+  width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: solid 4px shared_colors.$dark_gray;
+  background-color: shared_colors.$very_light_gray;
+  text-align: center;
+  p.url { 
+    font-family: monospace;
+  }
+}

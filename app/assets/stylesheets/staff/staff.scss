@@ -1,7 +1,4 @@
-// staff専用のスタイルを全部まとめる
-@use "colors" as *;           // ここでは * で直接使えるようにしてもOK（staff内だけ）
+@use "colors" as *;  
 @use "dimensions" as *;
 @use "container";
 @use "layout";
-
-// ここにstaff特有の追加スタイルを書いてもOK
