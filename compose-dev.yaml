@@ -6,14 +6,16 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: baukis2_development   # ← 明示的に追加（おすすめ）
     ports:
-      - "5432:5432"
+      #- "5432:5432"
+      - "5433:5432"        # ← ここを5433:5432 に変更（ホスト側を5433に）
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U postgres -d baukis2_development"]  # ← DB名指定で精度UP
+      interval: 5s      # 短めにチェック
       timeout: 5s
-      retries: 5
-      start_period: 10s
+      retries: 12       # リトライを増やして余裕を持たせる
+      start_period: 25s # Postgresの初期化に十分な時間（これが重要！）
 
   web:
     build:
@@ -29,8 +31,11 @@ services:
     environment:
       - RAILS_ENV=development
       - RAILS_SERVE_STATIC_FILES=true
-    command: ./bin/dev          # Procfile.dev を使う場合（おすすめ）
-    # command: bundle exec rails server -b 0.0.0.0 -p 3000
+      - DATABASE_HOST=db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=baukis2_development   # ← 追加推奨
+    command: ./bin/dev
     tty: true
     stdin_open: true
 

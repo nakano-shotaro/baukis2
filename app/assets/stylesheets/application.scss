@@ -1,6 +1,7 @@
 @use "sass:color";
 
 // === 共有スタイル（必ず最初に読み込む）===
+@use "shared/errors" as shared_errors;
 @use "shared/colors" as shared_colors;
 @use "shared/shared" as shared;
 

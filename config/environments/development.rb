@@ -81,6 +81,8 @@ Rails.application.configure do
   #'172.16.0.0/12',   # あなたの元の設定
   #'10.0.0.0/8',      # 念のため追加
   #'192.168.0.0/16'
-  #]
-  config.web_console.allowed_ips = ['0.0.0.0/0']
+  #] 
+  if defined?(WebConsole)
+    config.web_console.allowed_ips = ['0.0.0.0/0'] 
+  end  
 end

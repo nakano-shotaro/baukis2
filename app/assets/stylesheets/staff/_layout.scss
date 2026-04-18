@@ -20,6 +20,10 @@ header {
   color: staff_colors.$very_light_gray; 
   span.logo-mark {
     font-weight: bold;
+  } 
+  a {
+    float: right;
+    color: staff_colors.$very_light_gray;
   }
 }
 footer {
