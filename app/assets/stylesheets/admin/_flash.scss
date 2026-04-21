@@ -1,0 +1,20 @@
+@use "colors"  as admin_colors; ;
+@use "dimensions" as admin_dimensions;
+
+header {
+  span.notice, span.alert {
+    display: inline-block;
+    padding: admin_dimensions.$narrow admin_dimensions.$moderate;
+    margin: 0 admin_dimensions.$wide;
+    font-size: admin_dimensions.$tiny;
+    color: admin_colors.$very_light_gray;
+  } 
+  
+  span.notice {
+    background-color: admin_colors.$green;
+  }
+
+  span.alert {
+    background-color: admin_colors.$red;
+  }
+}
