@@ -1,0 +1,20 @@
+@use "colors"  as staff_colors; ;
+@use "dimensions" as staff_dimensions;
+
+header {
+  span.notice, span.alert {
+    display: inline-block;
+    padding: staff_dimensions.$narrow staff_dimensions.$moderate;
+    margin: 0 staff_dimensions.$wide;
+    font-size: staff_dimensions.$tiny;
+    color: staff_colors.$very_light_gray;
+  } 
+  
+  span.notice {
+    background-color: staff_colors.$green;
+  }
+
+  span.alert {
+    background-color: staff_colors.$red;
+  }
+}

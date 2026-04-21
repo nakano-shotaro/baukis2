@@ -1,0 +1,39 @@
+@use "colors" as staff_colors; 
+@use "dimensions"as staff_dimensions; 
+
+div#wrapper {
+  div#container {
+    div#login-form {
+      width: 400px;
+      margin: staff_dimensions.$wide * 2 auto;
+      padding: staff_dimensions.$wide * 2;
+      border-radius: staff_dimensions.$wide;
+      border: solid 4px staff_colors.$dark_cyan;
+      background-color: staff_colors.$very_light_gray;
+
+      h1 {
+        background-color: transparent;
+        color: staff_colors.$very_dark_cyan;
+        font-size: staff_dimensions.$huge;
+        font-weight: bold;
+      }
+
+      form {
+        div {
+          padding: staff_dimensions.$wide;
+          label {
+            display: block;
+            padding: staff_dimensions.$moderate 0;
+          }
+          input[type="text"], input[type="password"] {
+            padding: staff_dimensions.$wide;
+            width: 400px - staff_dimensions.$wide * 4;
+          }
+          input[type="submit"] {
+            padding: staff_dimensions.$wide staff_dimensions.$wide * 2;
+          }
+        }
+      }
+    }
+  }  
+}
