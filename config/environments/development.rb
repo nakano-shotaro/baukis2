@@ -84,5 +84,8 @@ Rails.application.configure do
   #] 
   if defined?(WebConsole)
     config.web_console.allowed_ips = ['0.0.0.0/0'] 
-  end  
+  end
+  
+  #config.hosts.clear
+  config.action_dispatch.show_exceptions = true
 end

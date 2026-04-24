@@ -4,7 +4,8 @@
   <%= content_tag(:span, flash.alert, class: "alert") if flash.alert %> 
   <%= 
     if current_administrator 
-      link_to "ログアウト", :admin_session, method: :delete 
+      link_to "ログアウト", :admin_session,
+              data: { turbo_method: :delete } 
     else 
       link_to "ログイン", :admin_login   
     end   

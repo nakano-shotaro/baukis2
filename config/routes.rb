@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -6,25 +6,33 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index" 
+  # root "posts#index"
 
-  namespace :staff do 
-    root "top#index" 
-    get "login" => "sessions#new", as: :login
-    post "session" => "sessions#create", as: :session 
-    delete "session" => "sessions#destroy"
-  end 
-  
-  namespace :admin do 
-    root "top#index" 
-    get "login" => "sessions#new", as: :login 
-    post "session" => "sessions#create", as: :session 
-    delete "session" => "sessions#destroy" 
-  end  
+  config = Rails.application.config.baukis2
 
-  namespace :customer do 
-    root "top#index"
-  end 
+  constraints host: config[:staff][:host] do  
+     namespace :staff, path: config[:staff][:path]  do    
+      root "top#index" 
+      get "login" => "sessions#new", as: :login
+      resource :session, only: [ :create, :destroy ] 
+      resource :account, except: [ :new, :create, :destroy ]  
+    end 
+  end   
   
-  get "up", to: "rails/health#show"   # ヘルスチェック用（Caddyがたまに叩く）
+  constraints host: config[:admin][:host] do 
+    namespace :admin, path: config[:admin][:path] do  
+      root "top#index" 
+      get "login" => "sessions#new", as: :login 
+      resource :session, only: [ :create, :destroy ] 
+      resources :staff_members 
+    end 
+  end    
+  
+  constraints host: config[:customer][:host] do 
+    namespace :customer, path: config[:customer][:path] do 
+      root "top#index"
+    end 
+  end   
+  
+  get "up", to: "rails/health#show"   # ヘルスチェック用（Caddyがたまに叩く） 
 end

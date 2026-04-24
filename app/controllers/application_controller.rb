@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   class IpAddressRejected < ActionController::ActionControllerError; end 
   
   include ErrorHandlers if Rails.env.production? 
-  
+
   private def set_layout 
     if params[:controller].match(%r{\A(staff|admin|customer)/}) 
       Regexp.last_match[1]
