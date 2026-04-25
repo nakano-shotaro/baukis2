@@ -22,7 +22,8 @@ header {
     font-weight: bold;
   } 
   a {
-    float: right; 
+    float: none; 
+    text-decoration: none; 
     color: admin_colors.$very_light_gray;
   }
 }
