@@ -9,7 +9,7 @@ class Admin::SessionsController < Admin::Base
   end 
   
   def create 
-    @form = Admin::LoginForm.new(params[:admin_login_form]) 
+    @form = Admin::LoginForm.new(login_form_params) 
     if @form.email.present? 
       administrator = 
         Administrator.find_by("LOWER(email) = ?", @form.email.downcase)   
@@ -28,6 +28,10 @@ class Admin::SessionsController < Admin::Base
       render action: "new", status: :unprocessable_entity     
     end        
   end 
+
+  private def login_form_params 
+    params.require(:admin_login_form).permit(:email, :password)
+  end   
   
   def destroy 
     session.delete(:administrator_id) 
