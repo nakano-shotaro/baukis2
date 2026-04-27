@@ -18,13 +18,17 @@ header {
   padding: staff_dimensions.$moderate; 
   background-color: staff_colors.$dark_cyan;
   color: staff_colors.$very_light_gray; 
-  span.logo-mark {
+  a.logo-mark {
+    float: none;
+    text-decoration: none;
     font-weight: bold;
   } 
   a {
-    float: none;
-    text-decoration: none;
+    /* float: right; */
+    float: right;
+    /* text-decoration: none; */
     color: staff_colors.$very_light_gray;
+    margin-left: staff_dimensions.$wide; 
   }
 }
 footer {

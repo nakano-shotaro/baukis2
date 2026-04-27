@@ -18,12 +18,14 @@ header {
   padding: admin_dimensions.$moderate; 
   background-color: admin_colors.$dark_magenta;
   color: admin_colors.$very_light_gray; 
-  span.logo-mark {
+  a.logo-mark {
+    float: none;
+    text-decoration: none;
     font-weight: bold;
   } 
   a {
-    float: none; 
-    text-decoration: none; 
+    float: right; 
+    /* text-decoration: none; */
     color: admin_colors.$very_light_gray;
   }
 }

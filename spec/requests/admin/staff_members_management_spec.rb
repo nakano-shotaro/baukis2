@@ -1,7 +1,17 @@
-require "rails_helper"
+require "rails_helper" 
 
-describe "管理者による職員管理" do 
-  let(:administrator) { create(:administrator) } 
+describe "管理者による職員管理", type: :request do 
+  let(:administrator) { create(:administrator) }
+
+  before do 
+    post admin_session_url, 
+      params: {
+        admin_login_form: {
+          email: administrator.email,
+          password: "pw"   
+        }
+      } 
+  end 
 
   describe "新規登録" do 
     let(:params_hash) { attributes_for(:staff_member) } 
@@ -22,7 +32,7 @@ describe "管理者による職員管理" do
 
     example "suspended フラグをセットする" do 
       params_hash.merge!(suspended: true)
-      patch admin_staff_members_url(staff_member),
+      patch admin_staff_member_url(staff_member),
         params: { staff_member: params_hash } 
       staff_member.reload
       expect(staff_member).to be_suspended    
@@ -32,7 +42,7 @@ describe "管理者による職員管理" do
       params_hash.delete(:password)
       params_hash.merge!(hashed_password: "x")
       expect { 
-        patch admin_staff_members_url(staff_member),
+        patch admin_staff_member_url(staff_member),
           params: { staff_member: params_hash } 
       }.not_to change { staff_member.hashed_password.to_s }    
     end 

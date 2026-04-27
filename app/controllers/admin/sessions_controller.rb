@@ -4,7 +4,7 @@ class Admin::SessionsController < Admin::Base
       redirect_to :admin_root   
     else 
       @form = Admin::LoginForm.new 
-      render action: "new", status: :unprocessable_entity   
+      render action: "new", status: :unprocessable_content   
     end         
   end 
   
@@ -17,7 +17,7 @@ class Admin::SessionsController < Admin::Base
     if Admin::Authenticator.new(administrator).authenticate(@form.password) 
       if administrator.suspended? 
         flash.now.alert = "アカウントが停止されています。"
-        render action: "new", status: :unprocessable_entity 
+        render action: "new", status: :unprocessable_content 
       else   
         session[:administrator_id] = administrator.id 
         flash.notice = "ログインしました。"
@@ -25,7 +25,7 @@ class Admin::SessionsController < Admin::Base
       end     
     else 
       flash.now.alert = "メールアドレスまたはパスワードが正しくありません。"
-      render action: "new", status: :unprocessable_entity     
+      render action: "new", status: :unprocessable_content     
     end        
   end 
 

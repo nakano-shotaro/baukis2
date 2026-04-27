@@ -1,0 +1,46 @@
+@use "colors" as admin_colors; 
+@use "dimensions" as admin_dimensions; 
+
+div#wrapper {
+  div#container {
+    div#generic-form {
+      width: 480px;
+      margin: admin_dimensions.$wide * 2 auto; 
+      padding: admin_dimensions.$wide * 2;
+      border-radius: admin_dimensions.$wide;
+      border: solid 4px admin_colors.$dark_cyan;
+      background-color: admin_colors.$very_light_gray;
+      
+      form {
+        div {
+          padding: admin_dimensions.$wide;
+          label {
+            display: block;
+            padding: admin_dimensions.$moderate 0;
+          }
+          label.required:after {
+            content: "*";
+            padding-left: admin_dimensions.$narrow;
+            color: admin_colors.$red;
+          }  
+        }
+        div.notes {
+          text-align: right;
+          font-size: admin_dimensions.$small;
+          span.mark { color: admin_colors.$red; }  
+        }
+        div.check-boxes, div.radio-buttons {
+          label {
+            display: inline-block;
+          }  
+        }
+        div.buttons {
+          text-align: center;
+          input[type="submit"] {
+            padding: admin_dimensions.$wide admin_dimensions.$wide * 2;
+          }  
+        }
+      }
+    }
+  }  
+}

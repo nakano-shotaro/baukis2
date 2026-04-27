@@ -4,7 +4,7 @@ class Staff::SessionsController < Staff::Base
       redirect_to :staff_root   
     else 
       @form = Staff::LoginForm.new 
-      render action: "new", status: :unprocessable_entity   
+      render action: "new", status: :unprocessable_content    
     end         
   end 
   
@@ -17,7 +17,7 @@ class Staff::SessionsController < Staff::Base
     if Staff::Authenticator.new(staff_member).authenticate(@form.password) 
       if staff_member.suspended? 
         flash.now.alert = "アカウントが停止されています。"
-        render action: "new", status: :unprocessable_entity 
+        render action: "new", status: :unprocessable_content 
       else   
         session[:staff_member_id] = staff_member.id 
         flash.notice = "ログインしました。"

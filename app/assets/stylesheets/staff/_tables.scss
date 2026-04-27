@@ -1,0 +1,41 @@
+@use "colors" as staff_colors;
+@use "dimensions" as staff_dimensions;
+
+div.table-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  
+  div.links {
+    text-align: right;
+    padding: staff_dimensions.$moderate;
+  }
+
+  table {
+    margin: staff_dimensions.$moderate auto 0;
+    border: solid staff_dimensions.$moderate staff_colors.$very_dark_cyan; 
+    tr {
+      th {
+        background-color: staff_colors.$dark_gray;
+        color: staff_colors.$very_light_gray;
+      }  
+      th, td { padding: staff_dimensions.$narrow; }
+      td.email, td.date { font-family: monospace; } 
+      td.boolean { text-align: center; } 
+      td.actions {
+        text-align: center;
+        color: staff_colors.$dark_gray;
+      }
+    }
+  }
+  table.listing {
+    width: 100%;
+    tr:nth-child(even) { background-color: staff_colors.$very_light_gray; }
+    tr:nth-child(odd) { background-color: staff_colors.$light_gray; }
+  }
+
+  table.attributes {
+    width: 100%; 
+    th { padding-right: staff_dimensions.$moderate; width: 200px; } 
+    td { background-color: staff_colors.$very_light_gray; }
+  }
+}
