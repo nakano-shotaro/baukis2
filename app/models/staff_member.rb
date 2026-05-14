@@ -5,5 +5,15 @@ class StaffMember < ApplicationRecord
     elsif raw_password.nil? 
       self.hashed_password = nil       
     end     
-  end     
+  end 
+  
+  def active? 
+    !suspended? && start_date <= Date.current && 
+      (end_date.nil? || end_date > Date.current)
+  end 
+  
+  #def active? 
+    #!suspended? && start_date <= Date.today && 
+      #(end_date.nil? || end_date > Date.today)
+  #end 
 end

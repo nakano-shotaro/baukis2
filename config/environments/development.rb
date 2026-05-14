@@ -82,10 +82,16 @@ Rails.application.configure do
   #'10.0.0.0/8',      # 念のため追加
   #'192.168.0.0/16'
   #] 
+
+  # WebConsole（Docker環境などで便利） ## '127.0.0.1', '::1', '172.16.0.0/12' 
   if defined?(WebConsole)
     config.web_console.allowed_ips = ['0.0.0.0/0'] 
   end
   
-  #config.hosts.clear
+  # === ここが重要 ===
+  # 開発環境ではすべてのホストを許可（Blocked host対策） ##本番環境（production.rb）には絶対に config.hosts.clear を入れないでください。
+  config.hosts.clear
+
+  # エラー画面を出す設定（開発環境の標準）
   config.action_dispatch.show_exceptions = true
 end

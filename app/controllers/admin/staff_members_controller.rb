@@ -1,6 +1,13 @@
-class Admin::StaffMembersController < Admin::Base 
+class Admin::StaffMembersController < Admin::Base  
+  #before_action :authorize 
+  skip_before_action :verify_authenticity_token, if: -> { Rails.env.test? }
+  #skip_before_action :verify_authenticity_token
+  #protect_from_forgery with: :exception
 
-  def index
+  def index 
+    #unless current_administrator
+      #redirect_to :admin_login
+    #end
     @staff_members = StaffMember.order(:family_name_kana, :given_name_kana)  
   end 
 
@@ -21,9 +28,10 @@ class Admin::StaffMembersController < Admin::Base
     @staff_member = StaffMember.new(staff_member_params) 
     if @staff_member.save 
       flash.notice = "職員アカウントを新規登録しました。"
-      redirect_to :admin_staff_members_url
+      redirect_to :admin_staff_members
+      ##redirect_to admin_staff_members_url(host: admin_host) 
     else 
-      render action: "new", status: :unprocessable_content
+      render :new, status: :unprocessable_content 
     end     
   end  
   
@@ -32,11 +40,27 @@ class Admin::StaffMembersController < Admin::Base
     @staff_member.assign_attributes(staff_member_params) 
     if @staff_member.save 
       flash.notice = "職員アカウントを更新しました。"
-      redirect_to :admin_staff_members_url
+      redirect_to :admin_staff_members
+      ##redirect_to admin_staff_members_url 
     else 
-      render action: "edit", status: :unprocessable_content
+      render :edit, status: :unprocessable_content 
     end     
-  end 
+  end  
+  
+  #private def authorize 
+    #unless current_administrator 
+      #flash.alert = "管理者としてログインしてください。"
+      #redirect_to :admin_login 
+    #end   
+  #end     
+  
+  def destroy 
+    staff_member = StaffMember.find(params[:id]) 
+    staff_member.destroy! 
+    flash.notice = "職員アカウントを削除しました。"
+    redirect_to :admin_staff_members, status: :see_other 
+    #redirect_to admin_staff_members_url, status: :see_other  
+  end  
   
   private def staff_member_params 
     params.require(:staff_member).permit(
@@ -44,12 +68,5 @@ class Admin::StaffMembersController < Admin::Base
       :family_name_kana, :given_name_kana,
       :start_date, :end_date, :suspended
     )
-  end   
-  
-  def destroy 
-    staff_member = StaffMember.find(params[:id]) 
-    staff_member.destroy! 
-    flash.notice = "職員アカウントを削除しました。"
-    redirect_to :admin_staff_members_url, status: :see_other 
-  end   
+  end 
 end

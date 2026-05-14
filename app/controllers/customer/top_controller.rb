@@ -1,5 +1,5 @@
 class Customer::TopController < ApplicationController
   def index 
-    render action: "index" 
+    render :index 
   end   
 end

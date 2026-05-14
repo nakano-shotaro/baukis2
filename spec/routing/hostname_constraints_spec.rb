@@ -26,7 +26,11 @@ RSpec.describe "ルーティング", type: :routing do
       controller: "rails/welcome",
       action: "index"
     )
-  end
+  end 
+
+  #example "ホスト名が対象外ならroutableではない" do
+    #expect(get: "http://foo.example.com").not_to be_routable
+  #end
   
   example "存在しないパスならroutableではない" do 
     config = Rails.application.config.baukis2 

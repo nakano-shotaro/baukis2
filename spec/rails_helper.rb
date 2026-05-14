@@ -1,13 +1,29 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+# === 追加推奨 ===
+require 'capybara/rails'
+require 'capybara/rspec'
+
+# Capybaraのデフォルト設定（必要に応じて調整）
+Capybara.default_max_wait_time = 10
+Capybara.default_normalize_ws = true
+
+# System SpecでJavaScriptを使う場合の推奨ドライバ設定例
+Capybara.javascript_driver = :selenium_chrome_headless  # または :cuprite が最近人気
+
+# 必要なら
+# Capybara.server = :puma, { Silent: true }
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 # Uncomment the line below in case you have `--require rails_helper` in the `.rspec` file
 # that will avoid rails generators crashing because migrations haven't been run yet
 # return unless Rails.env.test?
-require 'rspec/rails'
+require 'rspec/rails' 
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].each { |f| require f } 
 require 'factory_bot_rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -24,7 +40,7 @@ require 'factory_bot_rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -62,11 +78,23 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
+  config.include Rails.application.routes.url_helpers
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods 
+  config.include ActiveSupport::Testing::TimeHelpers 
+  config.include Rails.application.routes.url_helpers, type: :request
+  config.include Rails.application.routes.url_helpers, type: :system
+  config.before(:each, type: :request) do
+    # 管理者(admin)のテストの場合、デフォルトホストを切り替える
+    host! Rails.application.config.baukis2[:admin][:host]
+  end
+  # spec/system/admin/xxx_spec.rb
+  #config.before(:each, type: :system, admin: true) do
+    #host! Rails.application.config.baukis2[:admin][:host]
+  #end
 end

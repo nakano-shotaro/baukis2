@@ -4,7 +4,7 @@ StaffMember.create!(
   given_name: "太郎",
   family_name_kana: "ヤマダ",
   given_name_kana: "タロウ",
-  password: "password",
+  password: "pw",
   start_date: Date.today  
 )
 
@@ -22,7 +22,6 @@ given_names = %w{
   竹子:タケコ:takeko
   梅子:ウメコ:umeko
 }
-
 20.times do |n| 
   fn = family_names[n % 4].split(":")
   gn = given_names[n % 5].split(":") 
@@ -33,7 +32,7 @@ given_names = %w{
     given_name: gn[0],
     family_name_kana: fn[1],
     given_name_kana: gn[1],
-    password: "password",
+    password: "pw",
     start_date: (100 - n).days.ago.to_date,
     end_date: n == 0 ? Date.today : nil,
     suspended: n == 1

@@ -1,9 +1,11 @@
-class Admin::TopController < Admin::Base
+class Admin::TopController < Admin::Base 
+  skip_before_action :authorize 
+
   def index 
     if current_administrator
-      render action: "dashboard"
+      render :dashboard
     else  
-      render action: "index" 
+      render :index 
     end   
   end    
 end
