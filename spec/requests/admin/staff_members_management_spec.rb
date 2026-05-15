@@ -34,25 +34,25 @@ RSpec.describe "管理者による職員管理", type: :request do
     ###follow_redirect!  # 重要：リダイレクトを追う
   end
 
-  #describe "一覧" do
-    #example "成功" do
-      #get admin_staff_members_url(host: admin_host) 
+  describe "一覧" do
+    example "成功" do
+      get admin_staff_members_url(host: admin_host) 
       ###puts "Redirect to: #{response.location}" #
-      #expect(response.status).to eq(200)
-    #end
+      expect(response.status).to eq(200)
+    end
 
-    #example "停止フラグがセットされたら強制的にログアウト" do
-      #administrator.update_column(:suspended, true)
-      #get admin_staff_members_url
-      #expect(response).to redirect_to(admin_root_url)
-    #end
+    example "停止フラグがセットされたら強制的にログアウト" do
+      administrator.update_column(:suspended, true)
+      get admin_staff_members_url(host: admin_host)
+      expect(response).to redirect_to(admin_root_url(host: admin_host))
+    end
 
-    #example "セッションタイムアウト" do
-      #travel_to Admin::Base::TIMEOUT.from_now.advance(seconds: 1)
-      #get admin_staff_members_url
-      #expect(response).to redirect_to(admin_login_url)
-    #end
-  #end
+    example "セッションタイムアウト" do
+      travel_to Admin::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get admin_staff_members_url(host: admin_host)
+      expect(response).to redirect_to(admin_login_url(host: admin_host))
+    end
+  end
 
   describe "新規登録" do
     #let(:staff_member) { create(:staff_member) }
