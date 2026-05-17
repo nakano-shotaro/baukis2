@@ -28,6 +28,7 @@
         </td>
         <td class="actions">
           <%= link_to "編集", [ :edit, :admin, m ] %> |
+          <%= link_to "Events", [ :admin, m, :staff_events ] %> | 
           <%= link_to "削除", [ :admin, m ],
             data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
         </td>
