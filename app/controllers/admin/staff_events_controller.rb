@@ -5,6 +5,7 @@ class Admin::StaffEventsController < Admin::Base
       @events = @staff_member.events.order(occurred_at: :desc) 
     else 
       @events = StaffEvent.order(occurred_at: :desc)     
-    end     
+    end
+    @events = @events.page(params[:page])      
   end     
 end

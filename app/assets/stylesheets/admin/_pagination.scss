@@ -1,0 +1,28 @@
+@use "colors" as admin_colors;
+@use "dimensions" as admin_dimensions;
+
+nav.pagination {
+  margin: admin_dimensions.$moderate 0;
+  padding: admin_dimensions.$moderate 0;
+  display: inline-block;
+  border-top: solid admin_colors.$very_light_gray 1px;
+  border-bottom: solid admin_colors.$very_light_gray 1px;
+  span.page, span.first, span.prev, span.next, span.last {
+    display: inline-block;
+    background-color: admin_colors.$light_gray;
+    padding: admin_dimensions.$narrow admin_dimensions.$moderate;
+    a {
+      text-decoration: none;
+    }
+  }
+  span.current {
+    background-color: admin_colors.$dark_gray;
+    color: admin_colors.$light_gray;
+  }
+  span.disabled {
+    color: admin_colors.$gray;
+  }
+  span.gap {
+    background-color: transparent;
+  }
+}

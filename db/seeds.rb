@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end 
 
-table_names = %w(staff_members administrators)
+table_names = %w(staff_members administrators staff_events)
 
 table_names.each do |table_name| 
   path = Rails.root.join("db", "seeds", Rails.env, "#{table_name}.rb") 
