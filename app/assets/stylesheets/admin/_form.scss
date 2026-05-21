@@ -40,6 +40,12 @@ div#wrapper {
             padding: admin_dimensions.$wide admin_dimensions.$wide * 2;
           }  
         }
+        div.field_with_errors {
+          display: inline;
+          padding: 0;
+          label { color: admin_colors.$red; }
+          input { background-color: admin_colors.$pink; }
+        } 
       }
     }
   }  

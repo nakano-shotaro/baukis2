@@ -55,6 +55,7 @@ gem "valid_email2"
 gem "nokogiri"
 gem "email_validator"
 #gem 'foreman'
+gem "nkf"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
