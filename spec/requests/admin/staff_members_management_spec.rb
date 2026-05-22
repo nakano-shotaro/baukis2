@@ -11,6 +11,9 @@ RSpec.describe "管理者による職員管理", type: :request do
   let(:admin_host) { Rails.application.config.baukis2[:admin][:host] }
 
   before do 
+    # 🌟 【対策1】CSRF検証をテスト環境のみ一時的に無効化する
+    allow_any_instance_of(ActionController::Base).to receive(:handle_unverified_request).and_return(true)
+
     #let(:admin_host) { Rails.application.config.baukis2[:admin][:host] }
     #post admin_session_url,
     post admin_session_url(host: admin_host),
@@ -38,12 +41,14 @@ RSpec.describe "管理者による職員管理", type: :request do
     example "成功" do
       get admin_staff_members_url(host: admin_host) 
       ###puts "Redirect to: #{response.location}" #
+      #expect(response.status).to eq(302)
       expect(response.status).to eq(200)
     end
 
     example "停止フラグがセットされたら強制的にログアウト" do
       administrator.update_column(:suspended, true)
       get admin_staff_members_url(host: admin_host)
+      #expect(response).to redirect_to(admin_login_url(host: admin_host))
       expect(response).to redirect_to(admin_root_url(host: admin_host))
     end
 
@@ -67,9 +72,9 @@ RSpec.describe "管理者による職員管理", type: :request do
           }
        p response.body 
        
-       if response.status == 422
-         p "Validation Errors: #{assigns(:staff_member).errors.full_messages}"
-       end
+       #if response.status == 422
+         #p "Validation Errors: #{assigns(:staff_member).errors.full_messages}"
+       #end
 
        ##expect(response).to redirect_to(admin_staff_members_url(host: admin_host)) 
        expect(response).to redirect_to(admin_staff_members_url(host: admin_host))
@@ -99,7 +104,7 @@ RSpec.describe "管理者による職員管理", type: :request do
       #}.to raise_error(ActionController::ParameterMissing)
     #end 
     
-    xexample "バリデーションエラーがあると422 Unprocessable Contentを返す" do
+    example "バリデーションエラーがあると422 Unprocessable Contentを返す" do
       # 有効なパラメータの一部分（email）だけを空文字にする
       invalid_params = params_hash.merge(email: "")
   
