@@ -24,6 +24,9 @@ div#wrapper {
             color: admin_colors.$red;
           }  
         }
+        div.input-block {
+          input { margin-right: admin_dimensions.$narrow * 2; }
+        }
         div.notes {
           text-align: right;
           font-size: admin_dimensions.$small;
