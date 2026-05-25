@@ -49,6 +49,11 @@ div#wrapper {
           label { color: admin_colors.$red; }
           input { background-color: admin_colors.$pink; }
         } 
+        div.error-message {
+          color: admin_colors.$red; 
+          font-size: admin_dimensions.$small;
+          padding: 0 admin_dimensions.$very_wide;
+        }
       }
     }
   }  

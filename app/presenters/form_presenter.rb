@@ -20,23 +20,36 @@ class FormPresenter
   def text_field_block(name, label_text, options = {}) 
     markup(:div, class: "input-block") do |m| 
       m << decorated_label(name, label_text, options) 
-      m << text_field(name, options)   
+      m << text_field(name, options) 
+      m << error_messages_for(name)   
     end     
   end 
 
   def password_field_block(name, label_text, options = {}) 
     markup(:div, class: "input-block") do |m| 
       m << decorated_label(name, label_text, options) 
-      m << password_field(name, options)   
+      m << password_field(name, options) 
+      m << error_messages_for(name)  
     end     
   end 
 
   def date_field_block(name, label_text, options = {}) 
     markup(:div, class: "input-block") do |m| 
       m << decorated_label(name, label_text, options) 
-      m << date_field(name, options)    
+      m << date_field(name, options)  
+      m << error_messages_for(name)  
     end     
   end 
+
+  def error_messages_for(name) 
+    markup do |m|
+      object.errors.full_messages_for(name).each do |message| 
+        m.div(class: "error-message") do |m|
+          m.text message 
+        end   
+      end   
+    end   
+  end   
 
   private def decorated_label(name, label_text, options = {})
     label(name, label_text, class: options[:required] ? "required" : nil) 
