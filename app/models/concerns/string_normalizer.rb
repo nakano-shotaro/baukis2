@@ -20,4 +20,9 @@ module StringNormalizer
     # カタカナ変換を追加
     NKF.nkf("-W -w -Z1 --katakana", text.to_s).strip
   end  
+
+  def normalize_as_postal_code(text)
+    return nil if text.nil?
+    NKF.nkf("-W -w -Z1", text.to_s).strip.gsub(/-/, "") 
+  end 
 end    
