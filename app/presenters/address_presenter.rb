@@ -8,5 +8,9 @@ class AddressPresenter < ModelPresenter
     else
       object.postal_code      
     end     
-  end     
+  end  
+  
+  def phones  
+    object.phones.map(&:number) 
+  end 
 end     

@@ -25,4 +25,9 @@ module StringNormalizer
     return nil if text.nil?
     NKF.nkf("-W -w -Z1", text.to_s).strip.gsub(/-/, "") 
   end 
+
+  def normalize_as_phone_number(text) 
+    return nil if text.nil?
+    NKF.nkf("-W -w -Z1", text.to_s).strip 
+  end 
 end    

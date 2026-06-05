@@ -23,5 +23,9 @@ class CustomerPresenter < ModelPresenter
     else
       ""
     end           
+  end 
+  
+  def personal_phones 
+    object.personal_phones.map(&:number) 
   end   
 end     
