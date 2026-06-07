@@ -17,6 +17,9 @@ class Staff::CustomerForm
     @customer.build_work_address unless @customer.work_address 
     (2 - @customer.home_address.phones.size).times do 
       @customer.home_address.phones.build 
+    end
+    (2 - @customer.work_address.phones.size).times do 
+      @customer.work_address.phones.build 
     end   
   end 
   
@@ -80,18 +83,43 @@ class Staff::CustomerForm
 
     if inputs_work_address
       customer.work_address.assign_attributes(work_address_params)
+      phones = phone_params(:work_address).fetch(:phones)
+
+      customer.work_address.phones.size.times do |index| 
+        attributes = phones[index.to_s] 
+        if attributes && attributes[:number].present? 
+          customer.work_address.phones[index].assign_attributes(attributes)
+        else 
+          customer.work_address.phones[index].mark_for_destruction 
+        end     
+      end 
     else 
       customer.work_address.mark_for_destruction    
     end 
-    p phones   
+    #p phones   
   end 
 
   def valid? 
     # 顧客、自宅住所、勤務先住所、および電話番号（削除マーク付き以外）のすべてを検証
     valid_phones = customer.personal_phones.reject(&:marked_for_destruction?).map(&:valid?).all?
 
-    [ customer, customer.home_address, customer.work_address ]
-      .map(&:valid?).all? && valid_phones 
+    # 1. 顧客基本情報のバリデーション結果を取得
+    is_valid = customer.valid?
+
+    # 2. 自宅住所のチェックが入っている場合のみ、自宅住所のバリデーションを実行
+    if inputs_home_address
+      is_valid = customer.home_address.valid? && is_valid
+    end
+
+    # 3. 勤務先住所のチェックが入っている場合のみ、勤務先住所のバリデーションを実行
+    if inputs_work_address
+      is_valid = customer.work_address.valid? && is_valid
+    end
+
+    is_valid && valid_phones 
+
+    #[ customer, customer.home_address, customer.work_address ]
+      #.map(&:valid?).all? && valid_phones 
   end   
 
   def save 
@@ -107,8 +135,21 @@ class Staff::CustomerForm
         end
 
         customer.save!
-        customer.home_address.save!
-        customer.work_address.save!
+        #customer.home_address.save!
+        #customer.work_address.save!
+
+        # チェックが入っている場合のみ保存し、外れている場合は削除（または保存しない）
+        if inputs_home_address
+          customer.home_address.save!
+        else
+          customer.home_address.destroy! unless customer.home_address.new_record?
+        end
+
+        if inputs_work_address
+          customer.work_address.save!
+        else
+          customer.work_address.destroy! unless customer.work_address.new_record?
+        end
       end 
       true 
     else 
@@ -132,7 +173,7 @@ class Staff::CustomerForm
   end 
 
   private def work_address_params 
-    @params.require(:work_address).permit(
+    @params.require(:work_address).except(:phones).permit(
       :postal_code, :prefecture, :city, :address1, :address2,
       :company_name, :division_name
     )

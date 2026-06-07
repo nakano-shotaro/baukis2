@@ -12,7 +12,7 @@ Capybara.default_max_wait_time = 10
 Capybara.default_normalize_ws = true
 
 # System SpecでJavaScriptを使う場合の推奨ドライバ設定例
-Capybara.javascript_driver = :selenium_chrome_headless  # または :cuprite が最近人気
+#Capybara.javascript_driver = :selenium_chrome_headless  # または :cuprite が最近人気
 
 # 必要なら
 # Capybara.server = :puma, { Silent: true }

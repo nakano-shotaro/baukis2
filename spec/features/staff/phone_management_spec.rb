@@ -43,10 +43,10 @@ feature "職員による顧客電話番号管理" do
     end
 
     # 【デバッグ用コードを追加】
-    p "=== Customer Errors ==="
-    p customer.errors.full_messages
-    p "=== Phone Errors ==="
-    p customer.personal_phones.map { |p| [p.number, p.errors.full_messages] }
+    #p "=== Customer Errors ==="
+    #p customer.errors.full_messages
+    #p "=== Phone Errors ==="
+    #p customer.personal_phones.map { |p| [p.number, p.errors.full_messages] }
 
     #expect(customer.personal_phones.size).to eq(1) 
     #expect(customer.personal_phones[0].number).to eq("090-9999-9999")
@@ -78,5 +78,30 @@ feature "職員による顧客電話番号管理" do
     #except(customer.home_address.phones.size).to eq(1)
     #except(customer.home_address.phones[0].number).to eq("03-9999-9999") 
     expect(page).to have_content "03-9999-9999"
-  end   
+  end 
+  
+  scenario "職員が顧客の勤務先電話番号を追加する" do 
+    click_link "顧客管理"
+
+    #first("table.listing").click_link "編集"
+    within("table.listing") do 
+      click_link "編集", match: :first
+    end  
+
+    fill_in "form_work_address_phones_0_number", with: "03-9999-9999" 
+    check "form_work_address_phones_0_primary" 
+    click_button "更新" 
+
+    expect(page).to have_content "顧客情報を更新しました。" 
+
+    #customer.reload 
+    
+    within("table.listing") do
+      click_link "詳細", match: :first
+    end
+
+    #except(customer.home_address.phones.size).to eq(1)
+    #except(customer.home_address.phones[0].number).to eq("03-9999-9999") 
+    expect(page).to have_content "03-9999-9999"
+  end 
 end     

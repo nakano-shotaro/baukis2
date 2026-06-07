@@ -19,9 +19,21 @@ export default class extends Controller {
   }
 
   // private
-  #toggleFields(fieldset, enabled) {
-    fieldset.querySelectorAll("input, select, textarea").forEach(field => {
-      field.disabled = !enabled
-    })
+  //#toggleFields(fieldset, enabled) {
+    //fieldset.querySelectorAll("input, select, textarea").forEach(field => {
+      //field.disabled = !enabled
+    //})
+  //} 
+
+  #toggleFields(fieldset, checked) {
+    fieldset.querySelectorAll("input, select, textarea").forEach((field) => {
+      field.disabled = !checked
+  })   
+
+    if (checked) { 
+      fieldset.style.display = ""
+    } else {
+      fieldset.style.display = "none"
+    }
   }
-}
+} 
