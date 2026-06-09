@@ -13,5 +13,14 @@ class Customer < ApplicationRecord
   validates :birthday, date: {
     after: Date.new(1900, 1, 1),
     before: ->(obj) {Date.today},
-    allow_blank: true }    
+    allow_blank: true 
+  }
+  
+  before_save do 
+    if birthday 
+      self.birth_year = birthday.year 
+      self.birth_month = birthday.month 
+      self.birth_mday = birthday.mday 
+    end   
+  end   
 end
