@@ -1,0 +1,39 @@
+@use "colors" as customer_colors; 
+@use "dimensions"as customer_dimensions; 
+
+div#wrapper {
+  div#container {
+    div#login-form {
+      width: 400px;
+      margin: customer_dimensions.$wide * 2 auto;
+      padding: customer_dimensions.$wide * 2;
+      border-radius: customer_dimensions.$wide;
+      border: solid 4px customer_colors.$dark_yellow;
+      background-color: customer_colors.$very_light_gray;
+
+      h1 {
+        background-color: transparent;
+        color: customer_colors.$very_dark_yellow;
+        font-size: customer_dimensions.$huge;
+        font-weight: bold;
+      }
+
+      form {
+        div {
+          padding: customer_dimensions.$wide;
+          label {
+            display: block;
+            padding: customer_dimensions.$moderate 0;
+          }
+          input[type="text"], input[type="password"] {
+            padding: customer_dimensions.$wide;
+            width: 400px - customer_dimensions.$wide * 4;
+          }
+          input[type="submit"] {
+            padding: customer_dimensions.$wide customer_dimensions.$wide * 2;
+          }
+        }
+      }
+    }
+  }  
+}

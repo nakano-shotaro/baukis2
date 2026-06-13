@@ -18,8 +18,17 @@ header {
   padding: customer_dimensions.$moderate; 
   background-color: customer_colors.$dark_yellow;
   color: customer_colors.$very_light_gray; 
-  span.logo-mark {
+  /*span.logo-mark {
     font-weight: bold;
+  }*/
+  a.logo-mark {
+    float: none; 
+    text-decoration: none;
+    font-weight: bold;
+  }
+  a {
+    float: right;
+    color: customer_colors.$very_light_gray; 
   }
 }
 footer {
