@@ -20,7 +20,7 @@ class Customer::SessionsController < Customer::Base
       if @form.remember_me? 
         cookies.permanent.signed[:customer_id] = customer.id 
       else 
-        cookies.delete(:customer.id )  
+        cookies.delete(:customer_id )  
         session[:customer_id] = customer.id 
       end   
       flash.notice = "ログインしました。"
