@@ -36,6 +36,26 @@ RSpec.describe AllowedSource, type: :model do
       example '無効であること' do
         expect(src).not_to be_valid 
       end  
+    end 
+  end    
+
+  describe ".include?" do 
+    before do 
+      Rails.application.config.baukis2[:restrict_ip_addresses] = true 
+      AllowedSource.create!(namespace: "staff", ip_address: "127.0.0.1")
+      AllowedSource.create!(namespace: "staff", ip_address: "192.168.0.*")
     end  
+      
+    example "マッチしない場合" do 
+      expect(AllowedSource.include?("staff", "192.168.1.1")).to be_falsey 
+    end  
+      
+    example "全オクテットがマッチする場合" do 
+      expect(AllowedSource.include?("staff", "127.0.0.1")).to be_truthy  
+    end 
+
+    example "*付きのAllowedSourceにマッチする場合" do 
+      expect(AllowedSource.include?("staff", "192.168.0.100")).to be_truthy   
+    end   
   end
 end

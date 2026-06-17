@@ -97,4 +97,7 @@ RSpec.configure do |config|
   #config.before(:each, type: :system, admin: true) do
     #host! Rails.application.config.baukis2[:admin][:host]
   #end
+  config.before do 
+    Rails.application.config.baukis2[:restrict_ip_addresses] = false 
+  end   
 end
