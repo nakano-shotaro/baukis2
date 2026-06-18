@@ -1,4 +1,6 @@
 class AllowedSource < ApplicationRecord 
+  attr_accessor :last_octet 
+
   validates :octet1, :octet2, :octet3, :octet4, presence: true, 
     numericality: { only_integer: true, allow_blank: true }, 
     inclusion: { in: 0..255, allow_blank: true } 

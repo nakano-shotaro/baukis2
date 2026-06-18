@@ -1,0 +1,21 @@
+<% @title = "許可IPアドレス一覧" %>
+<h1><%= @title %></h1>
+
+<div id="generic-form" class="table-wrapper">
+  <div>
+    <%= render "new_allowed_source" %> 
+  </div>
+  <table class="listing">
+    <tr>
+      <th>IPアドレス</th>
+      <th>作成日時</th>
+    </tr>
+    <% @allowed_sources.each do |s| %> 
+      <% p = AllowedSourcePresenter.new(s, self) %>
+      <tr>
+        <td class="ip"><%= p.ip_address %></td>
+        <td class="date"><%= p.created_at %></td>
+      </tr>  
+    <% end %>    
+  </table>
+</div>
