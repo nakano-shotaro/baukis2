@@ -5,17 +5,30 @@
   <div>
     <%= render "new_allowed_source" %> 
   </div>
-  <table class="listing">
-    <tr>
-      <th>IPアドレス</th>
-      <th>作成日時</th>
-    </tr>
-    <% @allowed_sources.each do |s| %> 
-      <% p = AllowedSourcePresenter.new(s, self) %>
+
+  <%= form_with scope: "form", url: :delete_admin_allowed_sources,
+    method: :delete do |f| %> 
+    <table class="listing">
       <tr>
-        <td class="ip"><%= p.ip_address %></td>
-        <td class="date"><%= p.created_at %></td>
-      </tr>  
-    <% end %>    
-  </table>
+        <th>削除</th>
+        <th>IPアドレス</th>
+        <th>作成日時</th>
+      </tr>
+      <% @allowed_sources.each_with_index do |s, index| %>  
+        <% p = AllowedSourcePresenter.new(s, self) %>
+        <%= f.fields_for :allowed_sources, s, index: index do |ff| %> 
+          <%= ff.hidden_field :id %>
+          <tr>
+            <td class="actions"><%= ff.check_box :_destroy %></td>
+            <td class="ip"><%= p.ip_address %></td>
+            <td class="date"><%= p.created_at %></td>
+          </tr> 
+        <% end %> 
+      <% end %>    
+    </table>
+    <div class="buttons"> 
+      <%= f.submit "チェックしたIPアドレスを削除",
+      data: { turbo_confirm: "本当に削除しますか。" } %>
+    </div>
+  <% end %>
 </div>
