@@ -1,6 +1,7 @@
 class Admin::Base < ApplicationController
   skip_before_action :verify_authenticity_token, if: -> { Rails.env.test? }
   
+  before_action :check_source_ip_address 
   before_action :authorize
   before_action :check_account
   before_action :check_timeout
@@ -12,7 +13,11 @@ class Admin::Base < ApplicationController
     end
   end
 
-  helper_method :current_administrator
+  helper_method :current_administrator 
+
+  private def check_source_ip_address
+    raise IpAddressRejected unless AllowedSource.include?("admin", request.ip) 
+  end  
 
   private def authorize
     unless current_administrator
