@@ -57,8 +57,12 @@ class Admin::StaffMembersController < Admin::Base
   
   def destroy 
     staff_member = StaffMember.find(params[:id]) 
-    staff_member.destroy! 
-    flash.notice = "職員アカウントを削除しました。"
+    if staff_member.deletable? 
+      staff_member.destroy! 
+      flash.notice = "職員アカウントを削除しました。"
+    else 
+      flash.alert = "この職員アカウントは削除できません。"
+    end    
     redirect_to :admin_staff_members, status: :see_other 
     #redirect_to admin_staff_members_url, status: :see_other  
   end  

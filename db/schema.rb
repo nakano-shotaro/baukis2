@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_15_041243) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_20_030358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,9 +71,28 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_041243) do
     t.integer "birth_month"
     t.integer "birth_mday"
     t.index "lower((email)::text)", name: "index_customers_on_LOWER_email", unique: true
+    t.index ["birth_mday", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_mday_and_furigana"
+    t.index ["birth_mday", "given_name_kana"], name: "index_customers_on_birth_mday_and_given_name_kana"
+    t.index ["birth_month", "birth_mday"], name: "index_customers_on_birth_month_and_birth_mday"
+    t.index ["birth_month", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_month_and_furigana"
+    t.index ["birth_month", "given_name_kana"], name: "index_customers_on_birth_month_and_given_name_kana"
     t.index ["birth_year", "birth_month", "birth_mday"], name: "index_customers_on_birth_year_and_birth_month_and_birth_mday"
+    t.index ["birth_year", "family_name_kana", "given_name_kana"], name: "index_customers_on_birth_year_and_furigana"
+    t.index ["birth_year", "given_name_kana"], name: "index_customers_on_birth_year_and_given_name_kana"
     t.index ["family_name_kana", "given_name_kana"], name: "index_customers_on_family_name_kana_and_given_name_kana"
     t.index ["gender", "family_name_kana", "given_name_kana"], name: "index_customers_on_gender_and_furigana"
+    t.index ["given_name_kana"], name: "index_customers_on_given_name_kana"
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.bigint "program_id", null: false
+    t.bigint "customer_id", null: false
+    t.boolean "approved", default: false, null: false
+    t.boolean "canceled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_entries_on_customer_id"
+    t.index ["program_id", "customer_id"], name: "index_entries_on_program_id_and_customer_id", unique: true
   end
 
   create_table "phones", force: :cascade do |t|
@@ -88,6 +107,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_041243) do
     t.index ["address_id"], name: "index_phones_on_address_id"
     t.index ["customer_id"], name: "index_phones_on_customer_id"
     t.index ["number_for_index"], name: "index_phones_on_number_for_index"
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.integer "registrant_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "application_start_time", null: false
+    t.datetime "application_end_time", null: false
+    t.integer "min_number_of_participants"
+    t.integer "max_number_of_participants"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_start_time"], name: "index_programs_on_application_start_time"
+    t.index ["registrant_id"], name: "index_programs_on_registrant_id"
   end
 
   create_table "staff_events", force: :cascade do |t|
@@ -115,7 +148,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_15_041243) do
   end
 
   add_foreign_key "addresses", "customers"
+  add_foreign_key "entries", "customers"
+  add_foreign_key "entries", "programs"
   add_foreign_key "phones", "addresses"
   add_foreign_key "phones", "customers"
+  add_foreign_key "programs", "staff_members", column: "registrant_id"
   add_foreign_key "staff_events", "staff_members"
 end
