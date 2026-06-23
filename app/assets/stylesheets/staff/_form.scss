@@ -1,36 +1,37 @@
-@use "colors" as admin_colors; 
-@use "dimensions" as admin_dimensions; 
+@use "colors" as staff_colors; 
+@use "dimensions" as staff_dimensions; 
 
 div#wrapper {
   div#container {
     div#generic-form {
       width: 480px;
-      margin: admin_dimensions.$wide * 2 auto; 
-      padding: admin_dimensions.$wide * 2;
-      border-radius: admin_dimensions.$wide;
-      border: solid 4px admin_colors.$dark_cyan;
-      background-color: admin_colors.$very_light_gray;
+      margin: staff_dimensions.$wide * 2 auto; 
+      padding: staff_dimensions.$wide * 2;
+      border-radius: staff_dimensions.$wide;
+      border: solid 4px staff_colors.$dark_cyan;
+      background-color: staff_colors.$very_light_gray;
       
       form {
         div {
-          padding: admin_dimensions.$wide;
+          padding: staff_dimensions.$wide;
           label {
             display: block;
-            padding: admin_dimensions.$moderate 0;
+            padding: staff_dimensions.$moderate 0;
           }
           label.required:after {
             content: "*";
-            padding-left: admin_dimensions.$narrow;
-            color: admin_colors.$red;
-          }  
+            padding-left: staff_dimensions.$narrow;
+            color: staff_colors.$red;
+          } 
+          span.instruction { font-size: staff_dimensions.$small; color: staff_colors.$dark_gray; }  
         }
         div.input-block {
-          input { margin-right: admin_dimensions.$narrow * 2; }
+          input { margin-right: staff_dimensions.$narrow * 2; }
         }
         div.notes {
           text-align: right;
-          font-size: admin_dimensions.$small;
-          span.mark { color: admin_colors.$red; }  
+          font-size: staff_dimensions.$small;
+          span.mark { color: staff_colors.$red; }  
         }
         div.check-boxes, div.radio-buttons {
           label {
@@ -43,19 +44,19 @@ div#wrapper {
         div.buttons {
           text-align: center;
           input[type="submit"] {
-            padding: admin_dimensions.$wide admin_dimensions.$wide * 2;
+            padding: staff_dimensions.$wide staff_dimensions.$wide * 2;
           }  
         }
         div.field_with_errors {
           display: inline;
           padding: 0;
-          label { color: admin_colors.$red; }
-          input { background-color: admin_colors.$pink; }
+          label { color: staff_colors.$red; }
+          input { background-color: staff_colors.$pink; }
         } 
         div.error-message {
-          color: admin_colors.$red;
-          font-size: admin_dimensions.$small;
-          padding: 0 admin_dimensions.$very_wide;
+          color: staff_colors.$red;
+          font-size: staff_dimensions.$small;
+          padding: 0 staff_dimensions.$very_wide;
         }
       }
     }
