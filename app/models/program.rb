@@ -30,5 +30,26 @@ class Program < ApplicationRecord
       self.application_end_hour = application_end_time.hour 
       self.application_end_minute = application_end_time.min 
     end 
-  end   
+  end  
+  
+  before_validation :set_application_start_time 
+  before_validation :set_application_end_time
+  
+  private def set_application_start_time 
+    if t = application_start_date&.in_time_zone 
+      self.application_start_time = t.advance(
+        hours: application_start_hour, 
+        minutes: application_start_minute 
+      )
+    end   
+  end 
+  
+  private def set_application_end_time 
+    if t = application_end_date&.in_time_zone 
+      self.application_end_time = t.advance(
+        hours: application_end_hour, 
+        minutes: application_end_minute 
+      )
+    end   
+  end
 end

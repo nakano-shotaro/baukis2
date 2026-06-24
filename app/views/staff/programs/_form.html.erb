@@ -5,7 +5,7 @@
 
   p.with_options(required: true) do |q| 
     m << q.datetime_field_block(:application_start, "申し込み開始日時",
-      instruction: "現在からi年後まで")
+      instruction: "現在から1年後まで")
     m << q.datetime_field_block(:application_end, "申し込み終了日時",
       instruction: "開始日時から90日後まで")   
   end   
