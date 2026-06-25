@@ -53,6 +53,10 @@ div#wrapper {
           label { color: staff_colors.$red; }
           input { background-color: staff_colors.$pink; }
         } 
+        div.with-errors { 
+          label { color: staff_colors.$red; }
+          input { background-color: staff_colors.$pink; } 
+        }
         div.error-message {
           color: staff_colors.$red;
           font-size: staff_dimensions.$small;

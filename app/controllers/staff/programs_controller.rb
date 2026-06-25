@@ -54,5 +54,12 @@ class Staff::ProgramsController < Staff::Base
       :max_number_of_participants,
       :description 
     ])
+  end 
+  
+  def destroy 
+    program = Program.find(params[:id])
+    program.destroy! 
+    flash.notice = "プログラムを削除しました。"
+    redirect_to :staff_programs, status: :see_other
   end   
 end
