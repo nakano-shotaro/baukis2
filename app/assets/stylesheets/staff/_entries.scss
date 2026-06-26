@@ -1,0 +1,23 @@
+@use "colors" as staff_colors;
+@use "dimensions" as staff_dimensions; 
+
+div.table-wrapper {
+  table.entries {
+    tr:nth-child(1) {
+      th { text-align: center; }  
+    }
+    tr {
+      th:nth-child(4n+1) {
+        padding: staff_dimensions.$moderate; 
+        width: 30px;
+        text-align: right;
+      } 
+      td { background-color: staff_colors.$very_light_gray; } 
+    }
+  } 
+  div.button-wrapper {
+    margin: staff_dimensions.$wide;
+    text-align: center;
+    button { padding: staff_dimensions.$moderate; } 
+  } 
+}
