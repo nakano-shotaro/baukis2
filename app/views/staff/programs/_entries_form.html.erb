@@ -4,35 +4,61 @@ cols = 4
 rows = entries.size / cols 
 rows += 1 unless entries.size % cols == 0 
 %>
-<table class="entries">
-  <tr>
-    <% cols.times do %>
-      <th></th>
-      <th>氏名</th>
-      <th>A</th>
-      <th>C</th>  
-    <% end %>    
-  </tr>
-  <% rows.times do |i| %>
+<div data-controller="entries-form">
+  <table class="entries">
     <tr>
-      <% cols.times do |j| %>
-        <% index = i * cols + j %>
-        <% e = entries[index] || break %>
-        <%= markup(:div, class: "entry") do |m| 
-          m.th index + 1
-          m.td e.customer.family_name + " " +  e.customer.given_name 
-          m.td do 
-            attributes = { type: "checkbox" }
-            attributes[:checked] = "checked" if e.approved? 
-            m.input attributes
-          end 
-          m.td do 
-            attributes = { type: "checkbox" }
-            attributes[:checked] = "checked" if e.canceled?  
-            m.input attributes 
-          end      
-        end %>    
-      <% end %>  
+      <% cols.times do %>
+        <th></th>
+        <th>氏名</th>
+        <th>A</th>
+        <th>C</th>  
+      <% end %>    
     </tr>
-  <% end %>  
-</table>
+    <% rows.times do |i| %>
+      <tr style="background-color: #fafafa;">
+        <% cols.times do |j| %>
+          <% index = i * cols + j %>
+          <% e = entries[index] || break %>
+          <%= markup(:div, class: "entry") do |m| 
+            m.th index + 1
+            m.td e.customer.family_name + " " +  e.customer.given_name 
+            m.td do 
+              attributes = { 
+                type: "checkbox", 
+                class: "approved",
+                "data-entries-form-target": "approved"  
+              } 
+              attributes["data-entry-id"] = e.id 
+              attributes[:checked] = "checked" if e.approved? 
+              m.input attributes
+            end 
+            m.td do 
+              attributes = { 
+                type: "checkbox", 
+                class: "canceled",
+                "data-entries-form-target": "canceled"
+              } 
+              attributes["data-entry-id"] = e.id  
+              attributes[:checked] = "checked" if e.canceled?  
+              m.input attributes 
+            end      
+          end %>    
+        <% end %>  
+      </tr>
+    <% end %>  
+  </table> 
+
+  <div class="button-wrapper" style="text-align: center; margin-top: 20px;">
+    <%= form_with model: Staff::EntriesForm.new(@program), scope: "form",
+      url: [ :update_all, :staff, @program, :entries ], 
+      html: { method: :patch, data: { entries_form_target: "form" } } do |f| %> 
+      <%= f.hidden_field :approved, data: { entries_form_target: "formApproved" } %>  
+      <%= f.hidden_field :not_approved, data: { entries_form_target: "formNotApproved" } %>
+      <%= f.hidden_field :canceled, data: { entries_form_target: "formCanceled" } %>
+      <%= f.hidden_field :not_canceled, data: { entries_form_target: "formNotCanceled" } %>
+      <%= button_tag "申し込みのフラグを更新する", type: "button",
+        id: "update-entries-button",
+        data: { action: "click->entries-form#submit" } %> 
+    <% end %>
+  </div>
+</div>

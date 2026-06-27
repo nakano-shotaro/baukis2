@@ -6,7 +6,7 @@ div.table-wrapper {
     tr:nth-child(1) {
       th { text-align: center; }  
     }
-    tr {
+    tr { 
       th:nth-child(4n+1) {
         padding: staff_dimensions.$moderate; 
         width: 30px;
