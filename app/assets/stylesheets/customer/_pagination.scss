@@ -1,0 +1,28 @@
+@use "colors" as customer_colors;
+@use "dimensions" as customer_dimensions;
+
+nav.pagination {
+  margin: customer_dimensions.$moderate 0;
+  padding: customer_dimensions.$moderate 0;
+  display: inline-block;
+  border-top: solid customer_colors.$very_light_gray 1px;
+  border-bottom: solid customer_colors.$very_light_gray 1px;
+  span.page, span.first, span.prev, span.next, span.last {
+    display: inline-block;
+    background-color: customer_colors.$light_gray;
+    padding: customer_dimensions.$narrow customer_dimensions.$moderate;
+    a {
+      text-decoration: none;
+    }
+  }
+  span.current {
+    background-color: customer_colors.$dark_gray;
+    color: customer_colors.$light_gray;
+  }
+  span.disabled {
+    color: customer_colors.$gray;
+  }
+  span.gap {
+    background-color: transparent;
+  }
+}

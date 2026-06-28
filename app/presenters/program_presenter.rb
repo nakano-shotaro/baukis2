@@ -1,5 +1,5 @@
 class ProgramPresenter < ModelPresenter 
-  delegate :title, :description, to: :object  
+  delegate :title, :description, :min_number_of_participants, :max_number_of_participants, to: :object  
   delegate :number_with_delimiter, to: :view_context 
   
   def application_start_time 

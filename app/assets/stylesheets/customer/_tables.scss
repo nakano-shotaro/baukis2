@@ -1,0 +1,42 @@
+@use "colors" as customer_colors;
+@use "dimensions" as customer_dimensions;
+
+div.table-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  
+  div.links {
+    text-align: right;
+    padding: customer_dimensions.$moderate;
+  }
+
+  table {
+    margin: customer_dimensions.$moderate auto 0;
+    border: solid customer_dimensions.$moderate customer_colors.$very_dark_yellow; 
+    tr {
+      th {
+        background-color: customer_colors.$dark_gray;
+        color: customer_colors.$very_light_gray;
+      }  
+      th, td { padding: customer_dimensions.$narrow; }
+      td.email, td.date, td.password { font-family: monospace; } 
+      td.boolean { text-align: center; } 
+      td.numeric { text-align: right; } 
+      td.actions {
+        text-align: center;
+        color: customer_colors.$dark_gray;
+      }
+    }
+  }
+  table.listing {
+    width: 100%;
+    tr:nth-child(even) { background-color: customer_colors.$very_light_gray; }
+    tr:nth-child(odd) { background-color: customer_colors.$light_gray; }
+  }
+
+  table.attributes {
+    width: 100%; 
+    th { padding-right: customer_dimensions.$moderate; width: 200px; } 
+    td { background-color: customer_colors.$very_light_gray; }
+  }
+}

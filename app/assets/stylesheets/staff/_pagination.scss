@@ -1,26 +1,26 @@
-@use "colors" as admin_colors;
-@use "dimensions" as admin_dimensions;
+@use "colors" as staff_colors;
+@use "dimensions" as staff_dimensions;
 
 nav.pagination {
-  margin: admin_dimensions.$moderate 0;
-  padding: admin_dimensions.$moderate 0;
+  margin: staff_dimensions.$moderate 0;
+  padding: staff_dimensions.$moderate 0;
   display: inline-block;
-  border-top: solid admin_colors.$very_light_gray 1px;
-  border-bottom: solid admin_colors.$very_light_gray 1px;
+  border-top: solid staff_colors.$very_light_gray 1px;
+  border-bottom: solid staff_colors.$very_light_gray 1px;
   span.page, span.first, span.prev, span.next, span.last {
     display: inline-block;
-    background-color: admin_colors.$light_gray;
-    padding: admin_dimensions.$narrow admin_dimensions.$moderate;
+    background-color: staff_colors.$light_gray;
+    padding: staff_dimensions.$narrow staff_dimensions.$moderate;
     a {
       text-decoration: none;
     }
   }
   span.current {
-    background-color: admin_colors.$dark_gray;
-    color: admin_colors.$light_gray;
+    background-color: staff_colors.$dark_gray;
+    color: staff_colors.$light_gray;
   }
   span.disabled {
-    color: admin_colors.$gray;
+    color: staff_colors.$gray;
   }
   span.gap {
     background-color: transparent;
