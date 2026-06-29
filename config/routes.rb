@@ -50,7 +50,11 @@ Rails.application.routes.draw do
       root "top#index"
       get "login" => "sessions#new", as: :login 
       resource :session, only: [ :create, :destroy ] 
-      resources :programs, only: [ :index, :show ] 
+      resources :programs, only: [ :index, :show ] do 
+        resource :entry, only: [:create] do 
+          patch :cancel 
+        end   
+      end  
     end 
   end   
   
