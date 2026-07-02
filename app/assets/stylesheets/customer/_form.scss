@@ -1,0 +1,68 @@
+@use "colors" as staff_colors; 
+@use "dimensions" as staff_dimensions; 
+
+div#wrapper {
+  div#container {
+    div#generic-form {
+      width: 480px;
+      margin: staff_dimensions.$wide * 2 auto; 
+      padding: staff_dimensions.$wide * 2;
+      border-radius: staff_dimensions.$wide;
+      border: solid 4px staff_colors.$dark_yellow;
+      background-color: staff_colors.$very_light_gray;
+      
+      form {
+        div {
+          padding: staff_dimensions.$wide;
+          label {
+            display: block;
+            padding: staff_dimensions.$moderate 0;
+          }
+          label.required:after {
+            content: "*";
+            padding-left: staff_dimensions.$narrow;
+            color: staff_colors.$red;
+          } 
+          span.instruction { font-size: staff_dimensions.$small; color: staff_colors.$dark_gray; }  
+        }
+        div.input-block {
+          input { margin-right: staff_dimensions.$narrow * 2; }
+        }
+        div.notes {
+          text-align: right;
+          font-size: staff_dimensions.$small;
+          span.mark { color: staff_colors.$red; }  
+        }
+        div.check-boxes, div.radio-buttons {
+          label {
+            display: inline-block;
+          }  
+        }
+        input[type="checkbox"] + label {
+          display: inline-block; 
+        }
+        div.buttons {
+          text-align: center;
+          input[type="submit"] {
+            padding: staff_dimensions.$wide staff_dimensions.$wide * 2;
+          }  
+        }
+        div.field_with_errors {
+          display: inline;
+          padding: 0;
+          label { color: staff_colors.$red; }
+          input { background-color: staff_colors.$pink; }
+        } 
+        div.with-errors { 
+          label { color: staff_colors.$red; }
+          input { background-color: staff_colors.$pink; } 
+        }
+        div.error-message {
+          color: staff_colors.$red;
+          font-size: staff_dimensions.$small;
+          padding: 0 staff_dimensions.$very_wide;
+        }
+      }
+    }
+  }  
+}

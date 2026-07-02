@@ -29,6 +29,7 @@ header {
   a {
     float: right;
     color: customer_colors.$very_light_gray; 
+    margin-left:customer_dimensions.$wide;
   }
 }
 footer {
