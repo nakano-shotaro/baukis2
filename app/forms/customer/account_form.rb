@@ -3,7 +3,7 @@ class Customer::AccountForm
 
   attr_accessor :customer, :inputs_home_address, :inputs_work_address  
   #delegate :persisted?, :save, to: :customer 
-  delegate :persisted?, to: :customer 
+  delegate :persisted?, :valid?, to: :customer 
 
   def initialize(customer)  
     @customer = customer
