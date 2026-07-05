@@ -3,7 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["homeCheckbox", "workCheckbox", "homeFields", "workFields"]
 
-  connect() {
+  connect() { 
+    // 画面内に <div class="confirming"> が存在する場合は処理を中断
+    if (document.querySelector("div.confirming")) return;
     this.toggleHomeAddress()
     this.toggleWorkAddress()
   }

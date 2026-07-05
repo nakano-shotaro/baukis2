@@ -3,7 +3,7 @@
 <div data-controller="address-toggle">
   <fieldset id="customer-fields">
     <legend>基本情報</legend>
-    <%= render "customer_fields", f: f %> 
+    <%= render "customer_fields", f: f, confirming: false %> 
   </fieldset>
 
   <div class="check-boxes">
@@ -17,7 +17,7 @@
 
   <fieldset id="home-address-fields" data-address-toggle-target="homeFields">  
     <legend>自宅住所</legend>
-    <%= render "home_address_fields", f: f %> 
+    <%= render "home_address_fields", f: f, confirming: false %> 
   </fieldset> 
 
   <div class="check-boxes">
@@ -31,6 +31,6 @@
 
   <fieldset id="work-address-fields" data-address-toggle-target="workFields"> 
     <legend>勤務先</legend>
-    <%= render "work_address_fields", f: f %> 
+    <%= render "work_address_fields", f: f, confirming: false %> 
   </fieldset>
 </div>

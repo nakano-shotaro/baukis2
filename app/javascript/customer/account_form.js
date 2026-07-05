@@ -12,7 +12,8 @@ function toggle_work_address_fields() {
   $("fieldset#work-address-fields").toggle(checked);  
 } 
 
-$(document).on("turbo:load", () => {
+$(document).on("turbo:load", () => { 
+  if ($("div.confirming").length) return;
   toggle_home_address_fields();
   toggle_work_address_fields();
 }); 

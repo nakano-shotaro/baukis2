@@ -24,6 +24,9 @@ div#wrapper {
             color: staff_colors.$red;
           } 
           span.instruction { font-size: staff_dimensions.$small; color: staff_colors.$dark_gray; }  
+          div.field-value { margin-left: staff_dimensions.$wide; font-weight: bold; } 
+          div.readonly { color: staff_colors.$dark_gray; } 
+          span.field-value { font-weight: bold; } 
         }
         div.input-block {
           input { margin-right: staff_dimensions.$narrow * 2; }
