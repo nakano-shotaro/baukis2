@@ -22,7 +22,8 @@ class Customer::AccountsController < Customer::Base
   def update  
     @customer_form = Customer::AccountForm.new(current_customer)
     @customer_form.assign_attributes(params[:form]) 
-    if params[:commit] || !params[:commit] 
+    #if params[:commit] || !params[:commit] 
+    if params[:correct]  
       # 入力値を保持したまま、Turboにレンダリングを認識させるため status を付与して再表示
       render action: "edit", status: :unprocessable_content  
     else   

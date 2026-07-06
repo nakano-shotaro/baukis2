@@ -88,7 +88,18 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods 
   config.include ActiveSupport::Testing::TimeHelpers 
   config.include Rails.application.routes.url_helpers, type: :request
-  config.include Rails.application.routes.url_helpers, type: :system
+  config.include Rails.application.routes.url_helpers, type: :system 
+
+  # --- ここから追加 ---
+  # テストサーバーのホストをすべてのインターフェース（0.0.0.0）にする
+  Capybara.server_host = "0.0.0.0"
+  # 毎回固定のポート番号（例: 43210）でテストサーバーを起動する
+  Capybara.server_port = 43210
+  # Cuprite（Chrome）がアクセスしにいくベースのURLを上記サーバーに合わせる
+  Capybara.app_host = "http://example.com:43210" 
+  Capybara.always_include_port = true 
+  # --- ここまで追加 ---
+
   config.before(:each, type: :request) do
     # 管理者(admin)のテストの場合、デフォルトホストを切り替える
     host! Rails.application.config.baukis2[:admin][:host]
@@ -99,5 +110,15 @@ RSpec.configure do |config|
   #end
   config.before do 
     Rails.application.config.baukis2[:restrict_ip_addresses] = false 
-  end   
+  end 
+
+  require "capybara/cuprite"
+  Capybara.register_driver :cuprite do |app|
+    Capybara::Cuprite::Driver.new(
+      app, 
+      window_size: [1200, 800], # [幅, 高さ] を数値で指定
+      browser_options: { "no-sandbox" => nil }
+    )
+  end
+  Capybara.javascript_driver = :cuprite
 end
