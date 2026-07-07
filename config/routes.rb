@@ -17,7 +17,9 @@ Rails.application.routes.draw do
       #post "session" => "sessions#create", as: :session 
       #delete "session" => "sessions#destroy"
       resource :session, only: [ :create, :destroy ] 
-      resource :account, except: [ :new, :create, :destroy ] 
+      resource :account, except: [ :new, :create, :destroy ] do 
+        patch :confirm
+      end   
       resource :password, only: [ :show, :edit, :update ] 
       resources :customers 
       resources :programs do 
