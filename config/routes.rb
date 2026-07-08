@@ -59,7 +59,10 @@ Rails.application.routes.draw do
         resource :entry, only: [:create] do 
           patch :cancel 
         end   
-      end  
+      end 
+      resources :messages, only: [ :new, :create ] do 
+        post :confirm, on: :collection 
+      end    
     end 
   end   
   

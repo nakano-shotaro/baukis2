@@ -54,7 +54,7 @@ div#wrapper {
           display: inline;
           padding: 0;
           label { color: staff_colors.$red; }
-          input { background-color: staff_colors.$pink; }
+          input, textarea { background-color: staff_colors.$pink; }
         } 
         div.with-errors { 
           label { color: staff_colors.$red; }

@@ -1,0 +1,2 @@
+module Customer::MessagesHelper
+end
