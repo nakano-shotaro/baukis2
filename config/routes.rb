@@ -26,7 +26,8 @@ Rails.application.routes.draw do
         resources :entries, only: [] do 
           patch :update_all, on: :collection 
         end   
-      end   
+      end  
+      get "messages/count" => "ajax#message_count"  
     end 
   end   
   
