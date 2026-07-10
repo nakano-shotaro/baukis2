@@ -23,5 +23,9 @@ class ApplicationController < ActionController::Base
   private def rescue403(e) 
     @exception = e 
     render "errors/forbidden", status: 403 
+  end  
+  
+  private def reject_non_xhr 
+    raise ActionController::BadRequest unless request.xhr? 
   end   
 end

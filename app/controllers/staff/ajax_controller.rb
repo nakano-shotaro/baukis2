@@ -2,6 +2,7 @@ class Staff::AjaxController < ApplicationController
   before_action :check_source_ip_address
   before_action :authorize 
   before_action :check_timeout 
+  before_action :reject_non_xhr 
   
   #GET 
   def message_count 
