@@ -27,7 +27,10 @@ Rails.application.routes.draw do
           patch :update_all, on: :collection 
         end   
       end  
-      get "messages/count" => "ajax#message_count"  
+      get "messages/count" => "ajax#message_count" 
+      resources :messages, only: [ :index, :show, :destroy ] do 
+        get :inbound, :outbound, :deleted, on: :collection 
+      end    
     end 
   end   
   
