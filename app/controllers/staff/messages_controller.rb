@@ -19,6 +19,10 @@ class Staff::MessagesController < Staff::Base
   def deleted 
     @messages = Message.deleted.sorted.page(params[:page]) 
     render action: "index" 
+  end  
+  
+  def show 
+    @message = Message.find(params[:id]) 
   end   
 
   def destroy 

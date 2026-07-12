@@ -37,6 +37,10 @@ class MessagePresenter < ModelPresenter
   def truncated_subject 
     view_context.truncate(subject, length: 20)
   end 
+
+  def formatted_body 
+    ERB::Util.html_escape(body).gsub(/\n/, "<br>").html_safe 
+  end   
   
   def created_at 
     if object.created_at > Time.current.midnight 
@@ -46,5 +50,24 @@ class MessagePresenter < ModelPresenter
     else  
       object.created_at.strftime("%Y/%m/%d %H:%M")        
     end     
+  end 
+  
+  def tree 
+    expand(object.root || object) 
+  end  
+  
+  private def expand(node) 
+    markup(:ul) do |m| 
+      m.li do 
+        if node.id == object.id 
+          m.strong(node.subject)
+        else 
+          m << link_to(node.subject, view_context.staff_message_path(node))   
+        end 
+        node.children.each do |c| 
+          m << expand(c) 
+        end     
+      end   
+    end
   end   
 end    

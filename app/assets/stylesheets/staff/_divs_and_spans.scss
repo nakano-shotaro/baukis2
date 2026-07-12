@@ -1,7 +1,7 @@
 @use "colors" as staff_colors;
 @use "dimensions" as staff_dimensions; 
 
-div.description {
+div.description, div.body {
   margin: staff_dimensions.$wide;
   padding: staff_dimensions.$wide;
   background-color: staff_colors.$very_light_gray;  
