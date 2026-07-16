@@ -1,5 +1,10 @@
 @use "sass:color";
 
+// === 追加：jQuery UI と Tag-it の見た目をここで適用 ===
+@use "shared/jquery-ui";
+@use "shared/tagit";
+
+
 // === 共有スタイル（必ず最初に読み込む）===
 @use "shared/errors" as shared_errors;
 @use "shared/colors" as shared_colors;
@@ -11,3 +16,8 @@
 @use "customer/customer" as customer;
 
 // 必要に応じて追加の共通スタイルを書く
+
+// === 外部ライブラリのスタイル（jQuery UI & Tag-it）===
+@import url("https://cloudflare.com");
+@import url("https://cloudflare.com");
+@import url("https://cloudflare.com");

@@ -13,7 +13,16 @@
     <tr><th>送信者</th><td><%= p.sender %></td></tr>
     <tr><th>受信者</th><td><%= p.receiver %></td></tr>
     <tr><th>件名</th><td><%= p.subject %></td></tr>
-    <tr><th>作成日時</th><td class="date"><%= p.created_at %></td></tr>
+    <tr><th>作成日時</th><td class="date"><%= p.created_at %></td></tr> 
+    <tr>
+      <th>タグ</th>
+      <td> 
+        <div data-controller="tags">
+          <% tag_values = @message.tags.map(&:value).join(',') %>
+          <input name="tags" value="<%= tag_values %>" data-controller="tags">
+        </div>  
+      </td>
+    </tr>
   </table>
  
   <div class="tree"><%= p.tree %></div>

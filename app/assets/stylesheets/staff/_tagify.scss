@@ -1,0 +1,175 @@
+@charset "UTF-8";
+:root {
+  --tagify-dd-color-primary: rgb(53,149,246);
+  --tagify-dd-bg-color: white;
+  --tags-disabled-bg: #F1F1F1;
+  --tags-border-color: #DDD;
+  --tags-hover-border-color: #CCC;
+  --tags-focus-border-color: #3595f6;
+  --tag-bg: #E5E5E5;
+  --tag-hover-bg: #D3D2D2;
+  --tag-text-color: black;
+  --tag-text-color--active: black;
+  --tag-pad: 0.3em 0.5em;
+  --tag-invalid-color: #D39494;
+  --tag-invalid-bg: rgba(211, 148, 148, 0.5);
+  --tag-remove-bg: rgba(211, 148, 148, 0.3);
+  --tag-remove-btn-color: black;
+  --tag-remove-btn-bg: none;
+  --tag-remove-btn-bg--hover: #c77d7d;
+  --input-color: inherit;
+  --placeholder-color: rgba(0, 0, 0, 0.4);
+  --placeholder-color-focus: rgba(0, 0, 0, 0.25);
+  --loader-size: .8em;
+  --readonly-striped: 1;
+}
+
+.tagify {
+  --same-size: 1px;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid var(--tags-border-color);
+  padding: 0;
+  line-height: 0;
+  cursor: text;
+  outline: none;
+  position: relative;
+  box-sizing: border-box;
+  transition: .1s;
+}
+
+@keyframes tags-loading {
+  to { transform: rotate(1turn); }
+}
+
+.tagify:hover:not(.tagify--focus):not(.tagify--invalid) {
+  border-color: var(--tags-hover-border-color);
+}
+
+.tagify[disabled] {
+  background: var(--tags-disabled-bg);
+  filter: saturate(0);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.tagify[disabled] .tagify__tag__removeBtn {
+  display: none;
+}
+
+.tagify--focus {
+  border-color: var(--tags-focus-border-color);
+}
+
+.tagify--invalid {
+  --tags-border-color: var(--tag-invalid-color);
+}
+
+.tagify__input {
+  flex-grow: 1;
+  display: inline-block;
+  min-width: 110px;
+  margin: 2px;
+  padding: var(--tag-pad);
+  line-height: normal;
+  position: relative;
+  white-space: pre-wrap;
+  color: var(--input-color);
+  box-sizing: inherit;
+}
+
+.tagify__input:focus {
+  outline: none;
+}
+
+.tagify__input:focus:empty::before {
+  color: var(--placeholder-color-focus);
+}
+
+.tagify__input::before {
+  content: attr(data-placeholder);
+  height: 1em;
+  line-height: 1em;
+  margin: auto 0;
+  z-index: 1;
+  color: var(--placeholder-color);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: .15s ease-out;
+}
+
+.tagify--empty .tagify__input::before {
+  opacity: 1;
+}
+
+.tagify__input:focus:comment {
+  display: none;
+}
+
+.tagify__tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px 0 2px 2px;
+  position: relative;
+  z-index: 1;
+  outline: none;
+  line-height: normal;
+  cursor: default;
+  transition: .13s ease-out;
+}
+
+.tagify__tag > div {
+  vertical-align: top;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: var(--tag-pad);
+  color: var(--tag-text-color);
+  background: var(--tag-bg);
+  border-radius: 3px;
+  user-select: none;
+  transition: .13s ease-out;
+}
+
+.tagify__tag > div > * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tagify__tag:hover:not([readonly]) > div {
+  background: var(--tag-hover-bg);
+  color: var(--tag-text-color--active);
+}
+
+.tagify__tag__removeBtn {
+  order: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--tag-remove-btn-bg);
+  color: var(--tag-remove-btn-color);
+  font-size: 10px;
+  cursor: pointer;
+  margin-left: 4.5px;
+  margin-right: 2px;
+  transition: .2s ease-out;
+}
+
+.tagify__tag__removeBtn::after {
+  content: "×";
+}
+
+.tagify__tag__removeBtn:hover {
+  color: white;
+  background: var(--tag-remove-btn-bg--hover);
+}
