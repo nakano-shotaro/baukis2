@@ -1,22 +1,27 @@
 @charset "UTF-8";
+
+// アプリ共通の変数ファイルを読み込んでカラーを統一
+@use "colors" as staff_colors;
+@use "dimensions" as staff_dimensions;
+
 :root {
   --tagify-dd-color-primary: rgb(53,149,246);
   --tagify-dd-bg-color: white;
-  --tags-disabled-bg: #F1F1F1;
-  --tags-border-color: #DDD;
-  --tags-hover-border-color: #CCC;
+  --tags-disabled-bg: #{staff_colors.$very_light_gray};
+  --tags-border-color: #{staff_colors.$gray};
+  --tags-hover-border-color: #{staff_colors.$dark_gray};
   --tags-focus-border-color: #3595f6;
-  --tag-bg: #E5E5E5;
-  --tag-hover-bg: #D3D2D2;
+  --tag-bg: #{staff_colors.$light_gray};
+  --tag-hover-bg: #{staff_colors.$gray};
   --tag-text-color: black;
   --tag-text-color--active: black;
   --tag-pad: 0.3em 0.5em;
-  --tag-invalid-color: #D39494;
+  --tag-invalid-color: #{staff_colors.$red};
   --tag-invalid-bg: rgba(211, 148, 148, 0.5);
   --tag-remove-bg: rgba(211, 148, 148, 0.3);
   --tag-remove-btn-color: black;
   --tag-remove-btn-bg: none;
-  --tag-remove-btn-bg--hover: #c77d7d;
+  --tag-remove-btn-bg--hover: #{staff_colors.$pink};
   --input-color: inherit;
   --placeholder-color: rgba(0, 0, 0, 0.4);
   --placeholder-color-focus: rgba(0, 0, 0, 0.25);
@@ -24,6 +29,7 @@
   --readonly-striped: 1;
 }
 
+// タグ入力エリア全体の枠線スタイル
 .tagify {
   --same-size: 1px;
   display: inline-flex;
@@ -37,6 +43,8 @@
   position: relative;
   box-sizing: border-box;
   transition: .1s;
+  border-radius: 4px;
+  background: white;
 }
 
 @keyframes tags-loading {
@@ -52,10 +60,10 @@
   filter: saturate(0);
   opacity: .5;
   pointer-events: none;
-}
 
-.tagify[disabled] .tagify__tag__removeBtn {
-  display: none;
+  .tagify__tag__removeBtn {
+    display: none;
+  }
 }
 
 .tagify--focus {
@@ -66,6 +74,7 @@
   --tags-border-color: var(--tag-invalid-color);
 }
 
+// テキストを入力するインプット領域
 .tagify__input {
   flex-grow: 1;
   display: inline-block;
@@ -77,77 +86,62 @@
   white-space: pre-wrap;
   color: var(--input-color);
   box-sizing: inherit;
+
+  &:focus {
+    outline: none;
+
+    &:empty::before {
+      color: var(--placeholder-color-focus);
+    }
+  }
+
+  &::before {
+    content: attr(data-placeholder);
+    height: 1em;
+    line-height: 1em;
+    margin: auto 0;
+    z-index: 1;
+    color: var(--placeholder-color);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 1;
+  }
 }
 
-.tagify__input:focus {
-  outline: none;
-}
-
-.tagify__input:focus:empty::before {
-  color: var(--placeholder-color-focus);
-}
-
-.tagify__input::before {
-  content: attr(data-placeholder);
-  height: 1em;
-  line-height: 1em;
-  margin: auto 0;
-  z-index: 1;
-  color: var(--placeholder-color);
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 1;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  transition: .15s ease-out;
-}
-
-.tagify--empty .tagify__input::before {
-  opacity: 1;
-}
-
-.tagify__input:focus:comment {
-  display: none;
-}
-
+// 選択（登録）されたタグ自体の美しい四角いスタイル
 .tagify__tag {
   display: inline-flex;
   align-items: center;
-  margin: 2px 0 2px 2px;
+  margin: 2px;
   position: relative;
   z-index: 1;
-  outline: none;
-  line-height: normal;
   cursor: default;
-  transition: .13s ease-out;
-}
-
-.tagify__tag > div {
-  vertical-align: top;
-  box-sizing: border-box;
-  max-width: 100%;
-  padding: var(--tag-pad);
-  color: var(--tag-text-color);
-  background: var(--tag-bg);
   border-radius: 3px;
-  user-select: none;
-  transition: .13s ease-out;
-}
-
-.tagify__tag > div > * {
-  white-space: nowrap;
+  background-color: var(--tag-bg);
+  color: var(--tag-text-color);
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  vertical-align: top;
+  transition: .13s ease-out;
+
+  div {
+    vertical-align: top;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: var(--tag-pad);
+    line-height: inherit;
+    border-radius: inherit;
+    white-space: nowrap;
+    transition: .13s ease-out;
+  }
+
+  &:hover:not([readonly]) {
+    div {
+      background: var(--tag-hover-bg);
+      color: var(--tag-text-color--active);
+    }
+  }
 }
 
-.tagify__tag:hover:not([readonly]) > div {
-  background: var(--tag-hover-bg);
-  color: var(--tag-text-color--active);
-}
-
+// 🔴 タグの右側に表示される消去用の「×」ボタンのスタイル
 .tagify__tag__removeBtn {
   order: 5;
   display: inline-flex;
@@ -159,17 +153,19 @@
   background: var(--tag-remove-btn-bg);
   color: var(--tag-remove-btn-color);
   font-size: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
   cursor: pointer;
-  margin-left: 4.5px;
-  margin-right: 2px;
   transition: .2s ease-out;
-}
 
-.tagify__tag__removeBtn::after {
-  content: "×";
-}
+  // 擬似要素で「×」の文字を安全に出現させます
+  &::after {
+    content: "\00D7";
+    font-weight: bold;
+  }
 
-.tagify__tag__removeBtn:hover {
-  color: white;
-  background: var(--tag-remove-btn-bg--hover);
+  &:hover {
+    color: white;
+    background: var(--tag-remove-btn-bg--hover);
+  }
 }

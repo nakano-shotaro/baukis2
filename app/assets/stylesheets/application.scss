@@ -1,23 +1,11 @@
 @use "sass:color";
 
-// === 追加：jQuery UI と Tag-it の見た目をここで適用 ===
+// 🔴 tagify 関連の @use はすべて削除してください
+
 @use "shared/jquery-ui";
-@use "shared/tagit";
-
-
-// === 共有スタイル（必ず最初に読み込む）===
 @use "shared/errors" as shared_errors;
 @use "shared/colors" as shared_colors;
 @use "shared/shared" as shared;
-
-// === 各役割ごとのスタイル（名前空間で衝突防止）===
 @use "staff/staff" as staff;
 @use "admin/admin" as admin;
 @use "customer/customer" as customer;
-
-// 必要に応じて追加の共通スタイルを書く
-
-// === 外部ライブラリのスタイル（jQuery UI & Tag-it）===
-@import url("https://cloudflare.com");
-@import url("https://cloudflare.com");
-@import url("https://cloudflare.com");

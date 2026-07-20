@@ -17,10 +17,27 @@
     <tr>
       <th>タグ</th>
       <td> 
-        <div data-controller="tags">
-          <% tag_values = @message.tags.map(&:value).join(',') %>
-          <input name="tags" value="<%= tag_values %>" data-controller="tags">
-        </div>  
+        <!-- 🔴 再利用した美しい _tagify.scss の見た目を適用する外枠クラス（tagify） -->
+        <div class="tagify" data-controller="tags" data-tags-message-id-value="<%= @message.id %>" style="width: 100%; min-height: 38px; padding: 5px;">
+          
+          <!-- 登録済みの既存タグを「四角い枠」として一覧表示 -->
+          <% @message.tags.each do |tag| %>
+            <div class="tagify__tag">
+              <div><%= tag.value %></div>
+              <!-- 🔴 削除用のバツ印ボタン。クリックすると削除リクエストが走る -->
+              <span class="tagify__tag__removeBtn" 
+                    data-action="click->tags#remove" 
+                    data-tags-label-param="<%= tag.value %>"></span>
+            </div>
+          <% end %>
+
+          <!-- 新しく文字を入力するためのフォームエリア -->
+          <input class="tagify__input" 
+                 data-tags-target="input" 
+                 data-action="keydown->tags#add"
+                 placeholder="タグを入力してEnter..." 
+                 style="border: none; outline: none; background: transparent; min-width: 150px;">
+        </div>
       </td>
     </tr>
   </table>

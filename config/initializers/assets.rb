@@ -8,3 +8,6 @@ Rails.application.config.assets.precompile += %w[
   admin.css 
   customer.css 
 ]
+
+# config/initializers/assets.rb の末尾に追記
+Rails.application.config.assets.paths << Rails.root.join("node_modules")
