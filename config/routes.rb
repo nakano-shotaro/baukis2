@@ -35,7 +35,13 @@ Rails.application.routes.draw do
         resource :reply, only: [ :new, :create ] do 
           post :confirm 
         end   
-      end    
+      end  
+      
+      resources :tags, only: [] do 
+        resources :messages, only: [ :index ] do 
+          get :inbound, :outbound, :deleted, on: :collection 
+        end  
+      end   
     end 
   end   
   

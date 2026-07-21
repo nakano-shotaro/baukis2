@@ -5,4 +5,14 @@ div.description, div.body {
   margin: staff_dimensions.$wide;
   padding: staff_dimensions.$wide;
   background-color: staff_colors.$very_light_gray;  
+} 
+
+div.tags {
+  margin: staff_dimensions.$wide 0;
+  padding: staff_dimensions.$wide;
+  background-color: staff_colors.$very_light_gray;
+
+  span.current_tag {
+    font-weight: bold;
+  }
 }
