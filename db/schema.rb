@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_14_052900) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_22_070922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,6 +93,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_14_052900) do
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_entries_on_customer_id"
     t.index ["program_id", "customer_id"], name: "index_entries_on_program_id_and_customer_id", unique: true
+  end
+
+  create_table "hash_locks", force: :cascade do |t|
+    t.string "table", null: false
+    t.string "column", null: false
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["table", "column", "key"], name: "index_hash_locks_on_table_and_column_and_key", unique: true
   end
 
   create_table "message_tag_links", force: :cascade do |t|
