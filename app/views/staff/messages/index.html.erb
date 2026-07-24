@@ -34,7 +34,7 @@
         <td class="actions">
           <%= link_to "詳細", staff_message_path(m) %> | 
           <%= link_to_if m.kind_of?(CustomerMessage), "削除",
-            staff_message_path(m), data: {turbo_method: :delete} %> 
+            staff_message_path(m), data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか？"} %> 
         </td>
       </tr>  
     <% end %>    

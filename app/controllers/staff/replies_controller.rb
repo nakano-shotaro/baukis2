@@ -42,7 +42,7 @@ class Staff::RepliesController < Staff::Base
   private def staff_message_params 
     params.require(:staff_message).permit(
       :subject, 
-      :body
+      :body, 
       :tag_list
     ) 
   end   

@@ -1,8 +1,8 @@
 @use "colors" as customer_colors;
 @use "dimensions" as customer_dimensions; 
 
-div.description {
+div.description, div.body {
   margin: customer_dimensions.$wide;
   padding: customer_dimensions.$wide;
   background-color: customer_colors.$very_light_gray;  
-}
+} 
